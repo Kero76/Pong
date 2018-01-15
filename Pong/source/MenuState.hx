@@ -21,6 +21,7 @@ class MenuState extends FlxState
         
         _btnPlay = new FlxButton(_txtTitleGame.x, _txtTitleGame.y + BTN_MARGE, "Play", clickPlay);
         add(_btnPlay);
+        
         super.create();
     }
 
@@ -31,6 +32,6 @@ class MenuState extends FlxState
 
     private function clickPlay()
     {
-        FlxG.switchState(new FlxState());
+        FlxG.switchState(new PlayState());
     }
 }
