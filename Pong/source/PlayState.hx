@@ -12,6 +12,10 @@ class PlayState extends FlxState {
     private var rightRacketPlayer:Racket;
     private var ball:Ball;
 
+    /**
+        Constructor of the PlayState state.
+        It initialize the object present on game (Rackets and Ball).
+    **/
     override public function create() {
         leftRacketPlayer = new Racket(20, 20, FlxColor.BLUE, true);
         add(leftRacketPlayer);
@@ -25,6 +29,11 @@ class PlayState extends FlxState {
         super.create();
     }
 
+    /**
+        This function is call after each frame.
+        
+        @param elapsed
+    **/
     override public function update(elapsed:Float) {
         super.update(elapsed);
     }

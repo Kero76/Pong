@@ -7,12 +7,16 @@ import flixel.ui.FlxButton;
 
 class MenuState extends FlxState 
 {
-    static var BTN_MARGE:Int = 100;
-    static var TITLE_FONT_SIZE:Int = 64;
+    static inline var BTN_MARGE:Int = 100;
+    static inline var TITLE_FONT_SIZE:Int = 64;
 
     private var _btnPlay : FlxButton;
     private var _txtTitleGame : FlxText;
 
+    /**
+        Constructor of the MenuState state.
+        It initialize the object presenton the menu screen title.
+    **/
     override public function create()
     {
         _txtTitleGame = new FlxText(0, 0, 0, "Pong", TITLE_FONT_SIZE);
@@ -25,11 +29,20 @@ class MenuState extends FlxState
         super.create();
     }
 
+    /**
+        This function is call after each frame..
+        
+        @param elapsed
+    **/
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
     }
 
+    /**
+        This function is call when the player click on button
+        to start a party.
+    **/
     private function clickPlay()
     {
         FlxG.switchState(new PlayState());

@@ -15,20 +15,36 @@ class Racket extends FlxSprite
     private var modeTwoPlayer:Bool;
     private var firstPlayer:Bool;
 
-    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, firstPlayer:Bool, ?modeTwoPlayer:Bool)
+    /**
+        Constructor for a Racket.
+
+        @param X Initial X position of the Racket.
+        @param Y Initial Y position of the Racket.
+        @param color Color of the Racket.
+        @param firstPlayer Boolean to check if the racket is tthe player one or two.
+    **/
+    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, firstPlayer:Bool)
     {
         super(X, Y);
         makeGraphic(WIDTH, HEIGHT, color);
         this.firstPlayer = firstPlayer;
-        this.modeTwoPlayer = modeTwoPlayer;
     }
 
+    /**
+        This function is call after each frame.
+        It used to represent the movement of the Racket on the PlayState screen.
+
+        @param elapsed
+    **/
     override public function update(elapsed:Float)
     {
         movement();
         super.update(elapsed);
     }
 
+    /**
+        This function control the movement of the Racket.
+    **/
     private function movement()
     {
         if (canMove) 
@@ -47,15 +63,12 @@ class Racket extends FlxSprite
         movementSecondPlayer();
     }
 
-    private function moveTo(direction:MoveDirection) 
-    {
-        if (!canMove) 
-        {
-            directionToMove = direction;
-            canMove = true;
-        }
-    }
 
+    /**
+        This function compute the movement for the Racket.
+
+        @param direction The new direction pressed by the user for the Racket movement.
+    **/
     private function computeMovement(direction:MoveDirection) 
     {
         switch(direction) 
@@ -70,7 +83,23 @@ class Racket extends FlxSprite
             }
     }
 
+    /**
+        This function get the direction of the movement and check if the Racket can move.
 
+        @param direction The direction pressed by the player for the Racket movement.
+    **/
+    private function moveTo(direction:MoveDirection) 
+    {
+        if (!canMove) 
+        {
+            directionToMove = direction;
+            canMove = true;
+        }
+    }
+
+    /**
+        This function control the movement for the first player.
+    **/
     private function movementFirstPlayer() 
     {
         if (FlxG.keys.anyPressed([S]))
@@ -83,6 +112,9 @@ class Racket extends FlxSprite
         }
     }
 
+    /**
+        This function control the movement for the second player.
+    **/
     private function movementSecondPlayer() 
     {
         if (FlxG.keys.anyPressed([DOWN]))
