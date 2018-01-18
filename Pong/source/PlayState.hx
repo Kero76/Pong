@@ -17,10 +17,10 @@ class PlayState extends FlxState {
         It initialize the object present on game (Rackets and Ball).
     **/
     override public function create() {
-        leftRacketPlayer = new Racket(20, 20, FlxColor.BLUE, true);
+        leftRacketPlayer = new Racket(20, 20, FlxColor.BLUE, [Z, S]);
         add(leftRacketPlayer);
 
-        rightRacketPlayer = new Racket(Main.WIDTH - 20, 20, FlxColor.RED, false);
+        rightRacketPlayer = new Racket(Main.WIDTH - 20, 20, FlxColor.RED, [UP, DOWN]);
         add(rightRacketPlayer);
 
         ball = new Ball(Main.WIDTH / 2, Main.HEIGHT / 2, FlxColor.WHITE);

@@ -3,17 +3,18 @@ package rackets;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
+import flixel.input.keyboard.FlxKey;
+import flixel.math.FlxPoint;
 
 class Racket extends FlxSprite 
 {
     public static inline var WIDTH:Int = 12;
     public static inline var HEIGHT:Int = 100;
-    public static inline var MOVEMENT_SPEED:Float = 5;
+    public static inline var MOVEMENT_SPEED:Float = 200;
 
     private var canMove:Bool;
     private var directionToMove:MoveDirection;
-    private var modeTwoPlayer:Bool;
-    private var firstPlayer:Bool;
+    private var keys:Array<FlxKey>;
 
     /**
         Constructor for a Racket.
@@ -23,11 +24,12 @@ class Racket extends FlxSprite
         @param color Color of the Racket.
         @param firstPlayer Boolean to check if the racket is tthe player one or two.
     **/
-    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, firstPlayer:Bool)
+    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, keys:Array<FlxKey>)
     {
         super(X, Y);
         makeGraphic(WIDTH, HEIGHT, color);
-        this.firstPlayer = firstPlayer;
+        this.keys = keys;
+        drag.y = 1600;
     }
 
     /**
@@ -47,83 +49,28 @@ class Racket extends FlxSprite
     **/
     private function movement()
     {
-        if (canMove) 
+        var up:Bool = FlxG.keys.anyPressed([keys[0]]);
+        var down:Bool = FlxG.keys.anyPressed([keys[1]]);
+        var mA:Float = 0;
+
+        if (up && down)
         {
-            computeMovement(directionToMove);
-            if (firstPlayer == true) 
-            {
-                movementFirstPlayer();
-            }
-            else 
-            {
-                movementSecondPlayer();
-            }
+            up = down = false;
         }
 
-        movementSecondPlayer();
-    }
-
-
-    /**
-        This function compute the movement for the Racket.
-
-        @param direction The new direction pressed by the user for the Racket movement.
-    **/
-    private function computeMovement(direction:MoveDirection) 
-    {
-        switch(direction) 
-            {
-                case MoveDirection.UP :
-                    y -= MOVEMENT_SPEED;
-                    canMove = false;
-
-                case MoveDirection.DOWN :
-                    y += MOVEMENT_SPEED;
-                    canMove = false;
-            }
-    }
-
-    /**
-        This function get the direction of the movement and check if the Racket can move.
-
-        @param direction The direction pressed by the player for the Racket movement.
-    **/
-    private function moveTo(direction:MoveDirection) 
-    {
-        if (!canMove) 
+        if (up || down) 
         {
-            directionToMove = direction;
-            canMove = true;
-        }
-    }
+            if (up)
+            {
+                mA = -90;
+            }
+            else if (down)
+            {
+                mA = 90;
+            }
 
-    /**
-        This function control the movement for the first player.
-    **/
-    private function movementFirstPlayer() 
-    {
-        if (FlxG.keys.anyPressed([S]))
-		{
-            moveTo(MoveDirection.DOWN);
-		}
-		else if (FlxG.keys.anyPressed([Z]))
-		{
-            moveTo(MoveDirection.UP);
-        }
-    }
-
-    /**
-        This function control the movement for the second player.
-    **/
-    private function movementSecondPlayer() 
-    {
-        if (FlxG.keys.anyPressed([DOWN]))
-		{
-            moveTo(MoveDirection.DOWN);
-		}
-		else if (FlxG.keys.anyPressed([UP]))
-		{
-            moveTo(MoveDirection.UP);
+            velocity.set(MOVEMENT_SPEED, 0);
+            velocity.rotate(FlxPoint.weak(0, 0), mA);
         }
     }
 }
