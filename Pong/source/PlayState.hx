@@ -27,7 +27,8 @@ class PlayState extends FlxState {
         this.rightRacketPlayer = new Racket(FlxG.width - 20, 20, FlxColor.RED, [UP, DOWN]);
         add(this.rightRacketPlayer);
 
-        this.ball = new Ball(FlxG.width / 2, FlxG.height / 2, FlxColor.WHITE);
+        this.ball = new Ball(0, 0, FlxColor.WHITE);
+        this.ball.screenCenter();
         add(this.ball);
 
         this.collideWall = FlxCollision.createCameraWall(FlxG.camera, true, 1, true);
@@ -41,6 +42,14 @@ class PlayState extends FlxState {
         @param elapsed
     **/
     override public function update(elapsed:Float) {
+        if (FlxG.keys.pressed.R) 
+        {
+            this.ball.kill();
+            this.ball = new Ball(0, 0, FlxColor.WHITE);
+            this.ball.screenCenter();
+            add(this.ball);
+        }
+
         FlxG.collide(this.collideWall, this.leftRacketPlayer);
         FlxG.collide(this.collideWall, this.rightRacketPlayer);
         super.update(elapsed);
