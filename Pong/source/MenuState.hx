@@ -10,8 +10,8 @@ class MenuState extends FlxState
     static inline var BTN_MARGE:Int = 100;
     static inline var TITLE_FONT_SIZE:Int = 64;
 
-    private var _btnPlay : FlxButton;
-    private var _txtTitleGame : FlxText;
+    private var btnPlay : FlxButton;
+    private var txtTitleGame : FlxText;
 
     /**
         Constructor of the MenuState state.
@@ -19,12 +19,12 @@ class MenuState extends FlxState
     **/
     override public function create()
     {
-        _txtTitleGame = new FlxText(0, 0, 0, "Pong", TITLE_FONT_SIZE);
-        _txtTitleGame.screenCenter();
-        add(_txtTitleGame);
+        this.txtTitleGame = new FlxText(0, 0, 0, "Pong", TITLE_FONT_SIZE);
+        this.txtTitleGame.screenCenter();
+        add(this.txtTitleGame);
         
-        _btnPlay = new FlxButton(_txtTitleGame.x, _txtTitleGame.y + BTN_MARGE, "Play", clickPlay);
-        add(_btnPlay);
+        this.btnPlay = new FlxButton(this.txtTitleGame.x, this.txtTitleGame.y + MenuState.BTN_MARGE, "Play", this.clickPlay);
+        add(this.btnPlay);
         
         super.create();
     }

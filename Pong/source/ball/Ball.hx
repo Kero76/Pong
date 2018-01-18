@@ -10,7 +10,7 @@ class Ball extends FlxSprite
     /**
         Constructor of a Ball object.
     **/
-    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor) 
+    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor)
     {
         super(X, Y);
         makeGraphic(SPRITE_SIZE, SPRITE_SIZE, color);

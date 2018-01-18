@@ -1,7 +1,10 @@
 package ;
 
+import flixel.FlxG;
 import flixel.FlxState;
+import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
+import flixel.group.FlxGroup;
 
 import rackets.Racket;
 import ball.Ball;
@@ -11,20 +14,23 @@ class PlayState extends FlxState {
     private var leftRacketPlayer:Racket;
     private var rightRacketPlayer:Racket;
     private var ball:Ball;
+    private var collideWall:FlxGroup;
 
     /**
         Constructor of the PlayState state.
         It initialize the object present on game (Rackets and Ball).
     **/
     override public function create() {
-        leftRacketPlayer = new Racket(20, 20, FlxColor.BLUE, [Z, S]);
-        add(leftRacketPlayer);
+        this.leftRacketPlayer = new Racket(20, 20, FlxColor.BLUE, [Z, S]);
+        add(this.leftRacketPlayer);
 
-        rightRacketPlayer = new Racket(Main.WIDTH - 20, 20, FlxColor.RED, [UP, DOWN]);
-        add(rightRacketPlayer);
+        this.rightRacketPlayer = new Racket(FlxG.width - 20, 20, FlxColor.RED, [UP, DOWN]);
+        add(this.rightRacketPlayer);
 
-        ball = new Ball(Main.WIDTH / 2, Main.HEIGHT / 2, FlxColor.WHITE);
-        add(ball);
+        this.ball = new Ball(FlxG.width / 2, FlxG.height / 2, FlxColor.WHITE);
+        add(this.ball);
+
+        this.collideWall = FlxCollision.createCameraWall(FlxG.camera, true, 1, true);
 
         super.create();
     }
@@ -35,6 +41,8 @@ class PlayState extends FlxState {
         @param elapsed
     **/
     override public function update(elapsed:Float) {
+        FlxG.collide(this.collideWall, this.leftRacketPlayer);
+        FlxG.collide(this.collideWall, this.rightRacketPlayer);
         super.update(elapsed);
     }
 }

@@ -49,8 +49,8 @@ class Racket extends FlxSprite
     **/
     private function movement()
     {
-        var up:Bool = FlxG.keys.anyPressed([keys[0]]);
-        var down:Bool = FlxG.keys.anyPressed([keys[1]]);
+        var up:Bool = FlxG.keys.anyPressed([this.keys[0]]);
+        var down:Bool = FlxG.keys.anyPressed([this.keys[1]]);
         var mA:Float = 0;
 
         if (up && down)
@@ -69,7 +69,7 @@ class Racket extends FlxSprite
                 mA = 90;
             }
 
-            velocity.set(MOVEMENT_SPEED, 0);
+            velocity.set(Racket.MOVEMENT_SPEED, 0);
             velocity.rotate(FlxPoint.weak(0, 0), mA);
         }
     }
