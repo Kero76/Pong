@@ -10,6 +10,7 @@ class Ball extends FlxSprite
     public static inline var MOVEMENT_SPEED:Float = 200;
     
     private var movementBallAngle:Float;
+    private var speed:Float;
 
     /**
         Constructor of a Ball object.
@@ -23,6 +24,7 @@ class Ball extends FlxSprite
         super(X, Y);
         makeGraphic(SPRITE_SIZE, SPRITE_SIZE, color);
         this.movementBallAngle = initializeMovementDirection();
+        this.speed = MOVEMENT_SPEED;
     }
 
     /**
@@ -56,6 +58,7 @@ class Ball extends FlxSprite
         } else {
             this.movementBallAngle = (this.movementBallAngle + 180) * -1;
         }
+        this.speed += 10;
     }
 
     /**
@@ -63,7 +66,7 @@ class Ball extends FlxSprite
      */
     private function movement() 
     {
-        velocity.set(Ball.MOVEMENT_SPEED, 0);
+        velocity.set(this.speed, 0);
         velocity.rotate(FlxPoint.weak(0, 0), this.movementBallAngle);
     }
 
