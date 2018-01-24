@@ -47,6 +47,18 @@ class Ball extends FlxSprite
     }
 
     /**
+     *  This function compute the new angler after racket collision.
+     */
+    public function angleAfterCollideWithRacket()
+    {
+        if (x == 0 || x == Main.WIDTH - SPRITE_SIZE) {
+            this.movementBallAngle = -this.movementBallAngle;
+        } else {
+            this.movementBallAngle = (this.movementBallAngle + 180) * -1;
+        }
+    }
+
+    /**
      *  This function is used to move the ball.
      */
     private function movement() 

@@ -57,6 +57,11 @@ class PlayState extends FlxState {
         {
             this.ball.angleAfterCollideWithWall();
         }
+
+        if (FlxG.collide(this.ball, this.leftRacketPlayer) || FlxG.collide(this.ball, this.rightRacketPlayer)) 
+        {
+            this.ball.angleAfterCollideWithRacket();
+        }
         
         super.update(elapsed);
     }
