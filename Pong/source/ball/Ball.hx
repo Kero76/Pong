@@ -26,7 +26,7 @@ class Ball extends FlxSprite
     }
 
     /**
-
+     *  This function update the current state of the ball.
     **/
     override public function update(elapsed:Float) 
     {
@@ -34,6 +34,21 @@ class Ball extends FlxSprite
         super.update(elapsed);
     }
 
+    /**
+     *  This function compute the new angle after a wall collision.
+     */
+    public function angleAfterCollideWithWall()
+    {
+        if (y == 0  || y == Main.HEIGHT - SPRITE_SIZE) {
+            this.movementBallAngle = -this.movementBallAngle;
+        } else {
+            this.movementBallAngle = (this.movementBallAngle + 180) * -1;
+        }
+    }
+
+    /**
+     *  This function is used to move the ball.
+     */
     private function movement() 
     {
         velocity.set(Ball.MOVEMENT_SPEED, 0);
@@ -41,13 +56,13 @@ class Ball extends FlxSprite
     }
 
     /**
-
-    **/
+     *  This function initialize the first movement of the 
+     *  ball when the party is started.
+     */
     private function initializeMovementDirection() 
     {
         var angle = Math.random() * 90 - 45;
         var direction = Math.round(Math.random());
-
 
         return direction == 0 ? angle : angle + 180;
     }
