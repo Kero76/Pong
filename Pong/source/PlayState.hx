@@ -15,16 +15,17 @@ class PlayState extends FlxState {
     private var rightRacketPlayer:Racket;
     private var ball:Ball;
     private var collideWall:FlxGroup;
-
+    private var racketGroup:FlxGroup;
+    
     /**
         Constructor of the PlayState state.
         It initialize the object present on game (Rackets and Ball).
     **/
     override public function create() {
-        this.leftRacketPlayer = new Racket(20, 20, FlxColor.BLUE, [Z, S]);
+        this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S]);
         add(this.leftRacketPlayer);
 
-        this.rightRacketPlayer = new Racket(FlxG.width - 20, 20, FlxColor.RED, [UP, DOWN]);
+        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [UP, DOWN]);
         add(this.rightRacketPlayer);
 
         this.ball = new Ball(0, 0, FlxColor.WHITE);
@@ -32,6 +33,10 @@ class PlayState extends FlxState {
         add(this.ball);
 
         this.collideWall = FlxCollision.createCameraWall(FlxG.camera, true, 1, true);
+
+        this.racketGroup = new FlxGroup();
+        this.racketGroup.add(this.leftRacketPlayer);
+        this.racketGroup.add(this.rightRacketPlayer);
 
         super.create();
     }
@@ -44,25 +49,40 @@ class PlayState extends FlxState {
     override public function update(elapsed:Float) {
         if (FlxG.keys.pressed.R) 
         {
-            this.ball.kill();
-            this.ball = new Ball(0, 0, FlxColor.WHITE);
-            this.ball.screenCenter();
-            add(this.ball);
+            this.resetScreenGame();
         }
 
-        FlxG.collide(this.collideWall, this.leftRacketPlayer);
-        FlxG.collide(this.collideWall, this.rightRacketPlayer);
+        FlxG.collide(this.collideWall, this.racketGroup);
 
         if (FlxG.collide(this.collideWall, this.ball))
         {
             this.ball.angleAfterCollideWithWall();
         }
 
-        if (FlxG.collide(this.ball, this.leftRacketPlayer) || FlxG.collide(this.ball, this.rightRacketPlayer)) 
+        if (FlxG.collide(this.ball, this.racketGroup)) 
         {
             this.ball.angleAfterCollideWithRacket();
         }
         
         super.update(elapsed);
+    }
+
+    /**
+     *  Reset all positions on the sprite present on game screen.
+     */
+    private function resetScreenGame()
+    {
+        this.leftRacketPlayer.kill();
+        this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S]);
+        add(this.leftRacketPlayer);
+
+        this.rightRacketPlayer.kill();
+        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [UP, DOWN]);
+        add(this.rightRacketPlayer);
+
+        this.ball.kill();
+        this.ball = new Ball(0, 0, FlxColor.WHITE);
+        this.ball.screenCenter();
+        add(this.ball);
     }
 }
