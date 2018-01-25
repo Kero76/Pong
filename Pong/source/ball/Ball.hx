@@ -7,29 +7,30 @@ import flixel.math.FlxPoint;
 class Ball extends FlxSprite 
 {
     public static inline var SPRITE_SIZE:Int = 16;
-    public static inline var MOVEMENT_SPEED:Float = 200;
+    public static inline var INITIAL_SPEED:Float = 200;
+    public static inline var MAX_SPEED:Float = 500;
     
     private var movementBallAngle:Float;
     private var speed:Float;
 
     /**
-        Constructor of a Ball object.
-
-        @param X Initial X position of the Ball.
-        @param Y Initial Y position of the Ball.
-        @param color Color of the Ball.
-    **/
+     * Constructor of a Ball object.
+     *
+     * @param X Initial X position of the Ball.
+     * @param Y Initial Y position of the Ball.
+     * @param color Color of the Ball.
+     **/
     public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor)
     {
         super(X, Y);
         makeGraphic(SPRITE_SIZE, SPRITE_SIZE, color);
         this.movementBallAngle = initializeMovementDirection();
-        this.speed = MOVEMENT_SPEED;
+        this.speed = INITIAL_SPEED;
     }
 
     /**
      *  This function update the current state of the ball.
-    **/
+     **/
     override public function update(elapsed:Float) 
     {
         movement();
@@ -41,7 +42,7 @@ class Ball extends FlxSprite
      */
     public function angleAfterCollideWithWall()
     {
-        if (y == 0  || y == Main.HEIGHT - SPRITE_SIZE) {
+        if (y == 0 || y == Main.HEIGHT - SPRITE_SIZE) {
             this.movementBallAngle = -this.movementBallAngle;
         } else {
             this.movementBallAngle = (this.movementBallAngle + 180) * -1;
@@ -58,7 +59,11 @@ class Ball extends FlxSprite
         } else {
             this.movementBallAngle = (this.movementBallAngle + 180) * -1;
         }
-        this.speed += 10;
+
+        if (this.speed < MAX_SPEED) 
+        {
+            this.speed += 10;
+        }
     }
 
     /**

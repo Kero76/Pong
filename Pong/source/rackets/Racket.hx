@@ -10,7 +10,7 @@ class Racket extends FlxSprite
 {
     public static inline var WIDTH:Int = 12;
     public static inline var HEIGHT:Int = 100;
-    public static inline var MOVEMENT_SPEED:Float = 200;
+    public static inline var MOVEMENT_SPEED:Float = 300;
 
     private var canMove:Bool;
     private var directionToMove:MoveDirection;
