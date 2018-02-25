@@ -18,9 +18,9 @@ class PlayState extends FlxState {
     private var racketGroup:FlxGroup;
     
     /**
-        Constructor of the PlayState state.
-        It initialize the object present on game (Rackets and Ball).
-    **/
+      * Constructor of the PlayState state.
+      * It initialize the object present on game (Rackets and Ball).
+      */
     override public function create() {
         this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S]);
         add(this.leftRacketPlayer);
@@ -42,10 +42,10 @@ class PlayState extends FlxState {
     }
 
     /**
-        This function is call after each frame.
-        
-        @param elapsed
-    **/
+      * This function is call after each frame.
+      *  
+      * @param elapsed
+      */
     override public function update(elapsed:Float) {
         if (FlxG.keys.pressed.R) 
         {
@@ -68,25 +68,10 @@ class PlayState extends FlxState {
     }
 
     /**
-     *  Reset all positions on the sprite present on game screen.
+     * Reset all positions on the sprite present on game screen.
      */
     private function resetScreenGame()
     {
-        this.leftRacketPlayer.kill();
-        this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S]);
-        add(this.leftRacketPlayer);
-
-        this.rightRacketPlayer.kill();
-        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [UP, DOWN]);
-        add(this.rightRacketPlayer);
-
-        this.ball.kill();
-        this.ball = new Ball(0, 0, FlxColor.WHITE);
-        this.ball.screenCenter();
-        add(this.ball);
-
-        this.racketGroup = new FlxGroup();
-        this.racketGroup.add(this.leftRacketPlayer);
-        this.racketGroup.add(this.rightRacketPlayer);
+        FlxG.switchState(new ScoreState());
     }
 }
