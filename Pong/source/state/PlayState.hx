@@ -16,6 +16,8 @@ class PlayState extends FlxState {
     private var ball:Ball;
     private var collideWall:FlxGroup;
     private var racketGroup:FlxGroup;
+    private var scorePlayerOne:Int;
+    private var scorePlayerTwo:Int;
     
     /**
       * Constructor of the PlayState state.
@@ -37,6 +39,9 @@ class PlayState extends FlxState {
         this.racketGroup = new FlxGroup();
         this.racketGroup.add(this.leftRacketPlayer);
         this.racketGroup.add(this.rightRacketPlayer);
+
+        this.scorePlayerOne = 0;
+        this.scorePlayerTwo = 0;
 
         super.create();
     }
@@ -72,6 +77,6 @@ class PlayState extends FlxState {
      */
     private function resetScreenGame()
     {
-        FlxG.switchState(new ScoreState());
+        FlxG.switchState(new ScoreState(this.scorePlayerOne, this.scorePlayerTwo));
     }
 }

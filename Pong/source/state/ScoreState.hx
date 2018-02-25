@@ -9,13 +9,29 @@ class ScoreState extends FlxState
 {
     static inline var SCORE_FONT_SIZE:Int = 64;
     private var txtScore:FlxText;
+    private var scorePlayerOne:Int;
+    private var scorePlayerTwo:Int;
+
+    /**
+     *  Create new instance of ScoreState.
+     *  
+     *  @param scorePlayerOne - The current score of the player one.
+     *  @param scorePlayerTwo - The current score of the player two.
+     */
+    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int) 
+    {
+        this.scorePlayerOne = scorePlayerOne;
+        this.scorePlayerTwo = scorePlayerTwo;
+        super();
+    }
 
     /**
      *  Create state about score.
      */
     override public function create()
     {
-        this.txtScore = new FlxText(0, 0, 0, "Score\n 0 - 0", SCORE_FONT_SIZE);
+        var showScore = this.scorePlayerOne + " - " + this.scorePlayerTwo;
+        this.txtScore = new FlxText(0, 0, 0, "Score\n" + showScore, SCORE_FONT_SIZE);
         this.txtScore.screenCenter();
         add(this.txtScore);
 

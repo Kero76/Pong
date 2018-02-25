@@ -45,6 +45,6 @@ class MenuState extends FlxState
      */
     private function clickPlay()
     {
-        FlxG.switchState(new ScoreState());
+        FlxG.switchState(new ScoreState(0, 0));
     }
 }
