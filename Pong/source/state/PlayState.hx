@@ -24,10 +24,10 @@ class PlayState extends FlxState {
       * It initialize the object present on game (Rackets and Ball).
       */
     override public function create() {
-        this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S]);
+        this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S], 0);
         add(this.leftRacketPlayer);
 
-        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [UP, DOWN]);
+        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [UP, DOWN], 0);
         add(this.rightRacketPlayer);
 
         this.ball = new Ball(0, 0, FlxColor.WHITE);
@@ -77,6 +77,6 @@ class PlayState extends FlxState {
      */
     private function resetScreenGame()
     {
-        FlxG.switchState(new ScoreState(this.scorePlayerOne, this.scorePlayerTwo));
+        FlxG.switchState(new ScoreState(this.leftRacketPlayer.get_score(), this.rightRacketPlayer.get_score()));
     }
 }
