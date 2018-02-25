@@ -16,19 +16,24 @@ class Racket extends FlxSprite
     private var directionToMove:MoveDirection;
     private var keys:Array<FlxKey>;
 
-    /**
-        Constructor for a Racket.
+    @:isVar()
+    public var score(default, default):Int;
 
-        @param X Initial X position of the Racket.
-        @param Y Initial Y position of the Racket.
-        @param color Color of the Racket.
-        @param firstPlayer Boolean to check if the racket is tthe player one or two.
-    **/
-    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, keys:Array<FlxKey>)
+    /**
+     *  Constructor for a Racket.
+     *  
+     *  @param X - Initial X position of the Racket.
+     *  @param Y - Initial Y position of the Racket.
+     *  @param color - Color of the Racket.
+     *  @param keys - Control associate to move the racket. 
+     *  @param score - Current score of the racket.
+     */
+    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, keys:Array<FlxKey>, ?score:Int)
     {
         super(X, Y);
         makeGraphic(WIDTH, HEIGHT, color);
         this.keys = keys;
+        this.score = score;
         drag.y = 1600;
     }
 
@@ -72,5 +77,23 @@ class Racket extends FlxSprite
             velocity.set(Racket.MOVEMENT_SPEED, 0);
             velocity.rotate(FlxPoint.weak(0, 0), mA);
         }
+    }
+
+    /**
+     *  Get the score of the racket.
+     */
+    public function get_score()
+    {
+        return this.score;
+    }
+
+    /**
+     *  Set the score of the racket.
+     *  
+     *  @param score - New score for the racket.
+     */
+    public function set_score(score:Int)
+    {
+        this.score = score;
     }
 }
