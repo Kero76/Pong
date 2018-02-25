@@ -1,4 +1,4 @@
-package rackets;
+package racket;
 
 /**
     An enumerator to indicate all possible direction 

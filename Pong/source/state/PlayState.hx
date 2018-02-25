@@ -1,4 +1,4 @@
-package ;
+package state;
 
 import flixel.FlxG;
 import flixel.FlxState;
@@ -6,8 +6,8 @@ import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 
-import rackets.Racket;
 import ball.Ball;
+import racket.Racket;
 
 class PlayState extends FlxState {
 

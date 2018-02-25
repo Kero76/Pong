@@ -3,6 +3,8 @@ package ;
 import flixel.FlxGame;
 import openfl.display.Sprite;
 
+import state.MenuState;
+
 class Main extends Sprite
 {
 	public static var WIDTH:Int = 640;

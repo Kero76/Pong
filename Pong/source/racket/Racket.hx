@@ -1,4 +1,4 @@
-package rackets;
+package racket;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
