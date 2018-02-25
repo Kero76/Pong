@@ -84,5 +84,9 @@ class PlayState extends FlxState {
         this.ball = new Ball(0, 0, FlxColor.WHITE);
         this.ball.screenCenter();
         add(this.ball);
+
+        this.racketGroup = new FlxGroup();
+        this.racketGroup.add(this.leftRacketPlayer);
+        this.racketGroup.add(this.rightRacketPlayer);
     }
 }
