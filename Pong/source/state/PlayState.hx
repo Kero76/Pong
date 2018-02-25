@@ -57,8 +57,25 @@ class PlayState extends FlxState {
             this.resetScreenGame();
         }
 
-        FlxG.collide(this.collideWall, this.racketGroup);
+        // If the ball is in one of the two goal, 
+        // the current round is complete and the score is updated.
+        if (this.ball.isInTheGoal())
+        {
+            if (this.ball.isInLeftGoal())
+            {
+                var newScore = this.rightRacketPlayer.get_score() + 1;
+                this.rightRacketPlayer.set_score(newScore);
+            }
+            if (this.ball.isInRightGoal())
+            {
+                var newScore = this.leftRacketPlayer.get_score() + 1;
+                this.leftRacketPlayer.set_score(newScore);
+            }
+            this.resetScreenGame();
+        }
 
+        // Collision section.
+        FlxG.collide(this.collideWall, this.racketGroup);
         if (FlxG.collide(this.collideWall, this.ball))
         {
             this.ball.angleAfterCollideWithWall();
