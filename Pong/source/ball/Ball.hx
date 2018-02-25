@@ -4,6 +4,8 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
 
+import racket.Racket;
+
 class Ball extends FlxSprite 
 {
     public static inline var SPRITE_SIZE:Int = 16;
@@ -30,6 +32,8 @@ class Ball extends FlxSprite
 
     /**
      *  This function update the current state of the ball.
+     *  
+     *  @param elapsed - 
      **/
     override public function update(elapsed:Float) 
     {
@@ -42,28 +46,64 @@ class Ball extends FlxSprite
      */
     public function angleAfterCollideWithWall()
     {
+        // The ball touch the top or the bottom of the game screen.
         if (y == 0 || y == Main.HEIGHT - SPRITE_SIZE) {
             this.movementBallAngle = -this.movementBallAngle;
-        } else {
+        } 
+        // The ball touch the left or the right wall screen and the game is terminate.
+        else {
             this.movementBallAngle = (this.movementBallAngle + 180) * -1;
         }
     }
 
     /**
-     *  This function compute the new angler after racket collision.
+     *  This function compute the new angle after racket collision.
      */
     public function angleAfterCollideWithRacket()
     {
-        if (x == 0 || x == Main.WIDTH - SPRITE_SIZE) {
+        if (x == SPRITE_SIZE || x == Main.WIDTH - SPRITE_SIZE) {
             this.movementBallAngle = -this.movementBallAngle;
         } else {
             this.movementBallAngle = (this.movementBallAngle + 180) * -1;
         }
 
-        if (this.speed < MAX_SPEED) 
+        if (this.speed < MAX_SPEED)
         {
             this.speed += 10;
         }
+    }
+        
+    /**
+     *  This function indicate if the ball is in the goal or not.
+     *  
+     *  @return Bool
+     *   True if the ball is in the goal. Otherwise, it return false.
+     */
+    public function isInTheGoal():Bool
+    {
+        return this.isInLeftGoal() || this.isInRightGoal();  
+    }
+
+    /**
+     *  The ball is in the left goal.
+     *  
+     *  @return Bool
+     *   The ball is in the left goal. 
+     */
+    public function isInLeftGoal():Bool
+    {
+        return x < (SPRITE_SIZE - Racket.WIDTH);
+    }
+
+    /**
+     *  The ball is in the rigth goal.
+     *  
+     *  @return Bool
+     *   The ball is in the right goal. 
+     */
+    public function isInRightGoal():Bool 
+    {
+        return x > Main.WIDTH - SPRITE_SIZE;
     }
 
     /**
