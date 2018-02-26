@@ -11,6 +11,7 @@ class ScoreState extends FlxState
     private var txtScore:FlxText;
     private var scorePlayerOne:Int;
     private var scorePlayerTwo:Int;
+    private var playState:FlxState;
 
     /**
      *  Create new instance of ScoreState.
@@ -48,7 +49,7 @@ class ScoreState extends FlxState
         // When players are ready, start game.
         if (FlxG.keys.pressed.ENTER || FlxG.keys.pressed.SPACE) 
         {
-            FlxG.switchState(new PlayState());
+            FlxG.switchState(new PlayState(this.scorePlayerOne, this.scorePlayerTwo));
         }
 
         super.update(elapsed);

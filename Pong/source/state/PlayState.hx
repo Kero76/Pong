@@ -18,16 +18,29 @@ class PlayState extends FlxState {
     private var racketGroup:FlxGroup;
     private var scorePlayerOne:Int;
     private var scorePlayerTwo:Int;
+
+    /**
+     *  Constructor of PlayState.
+     *  
+     *  @param scorePlayerOne - The score of the player one.
+     *  @param scorePlayerTwo - The score of the player two.
+     */
+    override public function new(?scorePlayerOne:Int, ?scorePlayerTwo:Int)
+    {
+        this.scorePlayerOne = scorePlayerOne;
+        this.scorePlayerTwo = scorePlayerTwo;
+        super();
+    }
     
     /**
       * Constructor of the PlayState state.
       * It initialize the object present on game (Rackets and Ball).
       */
     override public function create() {
-        this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S], 0);
+        this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S], this.scorePlayerOne);
         add(this.leftRacketPlayer);
 
-        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [UP, DOWN], 0);
+        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [UP, DOWN], this.scorePlayerTwo);
         add(this.rightRacketPlayer);
 
         this.ball = new Ball(0, 0, FlxColor.WHITE);
