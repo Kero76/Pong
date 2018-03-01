@@ -50,7 +50,7 @@ class PlayState extends FlxState {
         this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S], this.scorePlayerOne);
         add(this.leftRacketPlayer);
 
-        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [UP, DOWN], this.scorePlayerTwo);
+        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [P, M], this.scorePlayerTwo);
         add(this.rightRacketPlayer);
 
         this.ball = new Ball(0, 0, FlxColor.WHITE);
