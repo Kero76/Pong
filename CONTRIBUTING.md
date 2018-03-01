@@ -1,4 +1,4 @@
-# Contributing to ArcaBox
+# Contributing to Pong
 
 #### Table of contributor-covenant
 
@@ -11,7 +11,7 @@
 
 ## Code of Conduct
 
-This project, and everyone participating in it is governed by the [ArcaBox Code of Conduct](CODE_OF_CONDUCT.md).
+This project, and everyone participating in it is governed by the [Pong Code of Conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code.
 Please report unacceptable behavior to [nic.gille@gmail.com](mailto:nic.gille@gmail.com)
 
@@ -20,12 +20,12 @@ Please report unacceptable behavior to [nic.gille@gmail.com](mailto:nic.gille@gm
 
 ### Reporting Bugs
 
-This section guides you through submitting a bug report for ArcaBox.
+This section guides you through submitting a bug report for Pong.
 Following these guideline helps maintainers and the community understanding your report,
 reproduce the behavior and find related reports.
 
-Before creating a bug reports, check all [issues](https://github.com/Kero76/ArcaBox/issues)
-to check the presence of your bug. If you don't find the bug on [issues](https://github.com/Kero76/ArcaBox/issues),
+Before creating a bug reports, check all [issues](https://github.com/Kero76/Pong/issues)
+to check the presence of your bug. If you don't find the bug on [issues](https://github.com/Kero76/Pong/issues),
 you must create a new bug report include as many details as possible.
 
 > **Note** : If you find a **Closed** issue that seems like it's the same things
@@ -34,12 +34,12 @@ in the body of the new one.
 
 ### Suggesting Enhancements
 
-This section guides you through submitting an enhancement suggestion for ArcaBox,
+This section guides you through submitting an enhancement suggestion for Pong,
 including new features and minor improvements on existing functionality.
 Following these guideline helps maintainers and the community understanding your suggestion
 and find related suggestions.
 
-Before creating enhancement suggestions, please check all [issues](https://github.com/Kero76/ArcaBox/issues)
+Before creating enhancement suggestions, please check all [issues](https://github.com/Kero76/Pong/issues)
 as you might find out that you don't need to create one.
 When you're creating an enhancement suggestion, please include as many details as possible.
 
@@ -60,7 +60,6 @@ When you're creating an enhancement suggestion, please include as many details a
 | :books:                | `:books:`                | When writting **docs** on source code.                                     |
 | :sparkles:             | `:sparkles:`             | When adding new **features**.                                              |
 | :bug:                  | `:bug:`                  | When fixing a **bug**                                                      |
-| :umbrella::            | `:umbrella:`             | When writing **test**.                                                     |
 | :fire:                 | `:fire:`                 | When removing **features** or **file**.                                    |
 | :construction:         | `:construction:`         | When commiting code on **Work in Progress** state.                         |
 | :wrench:               | `:wrench:`               | When updating **settings** or **package manager** file.                    |
