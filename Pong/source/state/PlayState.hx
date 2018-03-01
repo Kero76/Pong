@@ -5,17 +5,27 @@ import flixel.FlxState;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
+import flixel.system.FlxSound;
 
 import ball.Ball;
 import racket.Racket;
 
 class PlayState extends FlxState {
 
+    // Sounds 
+    private var sndRacketBall:FlxSound;
+    private var sndBallWall:FlxSound;
+
+    // Models 
     private var leftRacketPlayer:Racket;
     private var rightRacketPlayer:Racket;
     private var ball:Ball;
+
+    // Groups
     private var collideWall:FlxGroup;
     private var racketGroup:FlxGroup;
+
+    // Another variables
     private var scorePlayerOne:Int;
     private var scorePlayerTwo:Int;
 
@@ -57,6 +67,10 @@ class PlayState extends FlxState {
         this.scorePlayerTwo = 0;
 
         super.create();
+
+        // Asset loading
+        this.sndRacketBall = FlxG.sound.load(AssetPaths.racket__ogg);
+        this.sndBallWall = FlxG.sound.load(AssetPaths.ball__ogg);
     }
 
     /**
@@ -92,11 +106,13 @@ class PlayState extends FlxState {
         if (FlxG.collide(this.collideWall, this.ball))
         {
             this.ball.angleAfterCollideWithWall();
+            this.sndBallWall.play(true);
         }
 
         if (FlxG.collide(this.ball, this.racketGroup)) 
         {
             this.ball.angleAfterCollideWithRacket();
+            this.sndRacketBall.play(true);
         }
         
         super.update(elapsed);
