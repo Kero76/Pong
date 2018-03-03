@@ -21,7 +21,9 @@
 
 package ;
 
+import flixel.FlxG;
 import flixel.FlxGame;
+import flixel.util.FlxSave;
 import openfl.display.Sprite;
 
 import state.MenuState;
@@ -35,5 +37,14 @@ class Main extends Sprite
 	{
 		super();
 		addChild(new FlxGame(Main.WIDTH, Main.HEIGHT, MenuState));
+
+		// Load save if player restart game with specific settings.
+		var save:FlxSave = new FlxSave();
+		save.bind("settings");
+		if (save.data.volume != null) 
+		{
+			FlxG.sound.volume = save.data.volume;
+		}
+		save.close();
 	}
 }
