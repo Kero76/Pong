@@ -29,6 +29,7 @@
 
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
+	<assets path="assets/images" include="*.png" />
 	<assets path="assets/sounds" include="*.ogg" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
