@@ -25,14 +25,16 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 
 class MenuState extends FlxState 
 {
     static inline var BTN_MARGE:Int = 100;
     static inline var TITLE_FONT_SIZE:Int = 64;
 
-    private var btnPlay : FlxButton;
-    private var txtTitleGame : FlxText;
+    private var btnPlay:FlxButton;
+    private var btnOption:FlxButton;
+    private var txtTitleGame:FlxText;
 
     /**
      * Constructor of the MenuState state.
@@ -45,7 +47,12 @@ class MenuState extends FlxState
         add(this.txtTitleGame);
         
         this.btnPlay = new FlxButton(this.txtTitleGame.x, this.txtTitleGame.y + MenuState.BTN_MARGE, "Play", this.clickPlay);
+		this.btnPlay.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
         add(this.btnPlay);
+
+        this.btnOption = new FlxButton(this.btnPlay.x + MenuState.BTN_MARGE, this.btnPlay.y, "Option", this.clickOption);
+		this.btnOption.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
+        add(this.btnOption);
         
         super.create();
     }
@@ -66,6 +73,17 @@ class MenuState extends FlxState
      */
     private function clickPlay()
     {
-        FlxG.switchState(new ScoreState(0, 0));
+        FlxG.camera.fade(FlxColor.BLACK, .33, true, function()
+        {
+            FlxG.switchState(new ScoreState(0, 0));
+        });
+    }
+
+    private function clickOption()
+    {
+        FlxG.camera.fade(FlxColor.BLACK, .33, true, function() 
+        {
+            FlxG.switchState(new OptionState());
+        });
     }
 }
