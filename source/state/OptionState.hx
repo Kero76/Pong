@@ -39,6 +39,7 @@ class OptionState extends FlxState
 	private var btnVolumeDown:FlxButton;
 	private var btnVolumeUp:FlxButton;
     private var btnBack:FlxButton;
+    private var btnReset:FlxButton;
 
     // Settings save
     private var save:FlxSave;
@@ -93,8 +94,21 @@ class OptionState extends FlxState
 		add(txtVolumeBar);
 
         // Button to return on game.
-        btnBack = new FlxButton((FlxG.width / 2) + 10, FlxG.height - 28, "Back", clickBack);
+        btnBack = new FlxButton(
+            (FlxG.width / 2) + 15, 
+            FlxG.height - 28, 
+            "Back", 
+            clickBack
+        );
 		add(btnBack);
+
+        btnReset = new FlxButton(
+            (FlxG.width / 2) - btnBack.width - 15, 
+            FlxG.height - 28, 
+            "Reset option", 
+            clickResetOption
+        );
+        add(btnReset);
 
         save = new FlxSave();
         save.bind("settings");
@@ -130,6 +144,17 @@ class OptionState extends FlxState
 			FlxG.switchState(new MenuState());
 		});
 	}
+
+    /**
+     *  This fucntion reset the default volume by 50% 
+     *  and remove option saved previously.
+     */
+    private function clickResetOption() 
+    {
+        save.erase();
+        FlxG.sound.volume = 0.5;
+        this.updateVolume();
+    }
 
     /**
      *  Method call to show the value of volume.
