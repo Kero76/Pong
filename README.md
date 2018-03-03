@@ -15,6 +15,7 @@ Each sound is convert on .ogg file to
 
 - [racket.ogg](https://freesound.org/people/NoiseCollector/sounds/4391/)
 - [ball.ogg](https://freesound.org/people/NoiseCollector/sounds/4359/)
+- [select.ogg](https://freesound.org/people/sharesynth/sounds/344508/)
 
 ## Changelog
 
