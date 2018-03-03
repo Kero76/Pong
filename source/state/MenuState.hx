@@ -47,9 +47,11 @@ class MenuState extends FlxState
         add(this.txtTitleGame);
         
         this.btnPlay = new FlxButton(this.txtTitleGame.x, this.txtTitleGame.y + MenuState.BTN_MARGE, "Play", this.clickPlay);
+		this.btnPlay.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
         add(this.btnPlay);
 
         this.btnOption = new FlxButton(this.btnPlay.x + MenuState.BTN_MARGE, this.btnPlay.y, "Option", this.clickOption);
+		this.btnOption.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
         add(this.btnOption);
         
         super.create();

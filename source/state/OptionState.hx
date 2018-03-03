@@ -100,6 +100,7 @@ class OptionState extends FlxState
             "Back", 
             clickBack
         );
+		btnBack.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
 		add(btnBack);
 
         btnReset = new FlxButton(
@@ -108,6 +109,7 @@ class OptionState extends FlxState
             "Reset option", 
             clickResetOption
         );
+		btnReset.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
         add(btnReset);
 
         save = new FlxSave();
@@ -138,11 +140,11 @@ class OptionState extends FlxState
 	 */
 	private function clickBack()
 	{
-		save.close();
-		FlxG.camera.fade(FlxColor.BLACK, .33, false, function()
-		{
-			FlxG.switchState(new MenuState());
-		});
+        save.close();
+        FlxG.camera.fade(FlxColor.BLACK, .33, false, function() 
+        {
+            FlxG.switchState(new MenuState());
+        });
 	}
 
     /**
