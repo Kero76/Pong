@@ -36,7 +36,6 @@ class Racket extends FlxSprite
     public static inline var RIGHT_ANGLE:Int = 90;
 
     private var canMove:Bool;
-    private var directionToMove:MoveDirection;
     private var keys:Array<FlxKey>;
 
     @:isVar()
