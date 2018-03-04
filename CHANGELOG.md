@@ -1,6 +1,14 @@
 # Changelog
 
-## Pong V0.1-SNAPSHOT - Release March 01, 2018
+## Pong v0.2-SNAPSHOT -
+
+### New Features
+
+* Add a bounce modifier when the ball encounter a Racket.
+* Add Option menu with :
+    * Change sound volume.
+
+## Pong v0.1-SNAPSHOT - Release March 01, 2018
 
 ### New Features 
 
