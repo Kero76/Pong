@@ -19,7 +19,7 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package ;
+package;
 
 @:build(flixel.system.FlxAssets.buildFileReferences("assets", true))
 class AssetPaths {}

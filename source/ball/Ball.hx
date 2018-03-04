@@ -27,15 +27,20 @@ import flixel.math.FlxPoint;
 
 import racket.Racket;
 
-class Ball extends FlxSprite 
+class Ball extends FlxSprite
 {
+    // Static attributes
     public static inline var SPRITE_SIZE:Int = 16;
-    public static inline var INITIAL_SPEED:Float = 200;
-    public static inline var MAX_SPEED:Float = 500;
-    public static inline var INCREASE_BALL_SPEED = 25;
+    public static inline var INITIAL_SPEED:Int = 200;
+    public static inline var MAX_SPEED:Int = 500;
+    public static inline var INCREASE_BALL_SPEED:Int = 25;
 
-    private var _movementBallAngle:Float;
-    private var _speed:Float;
+    public static inline var FLAT_ANGLE:Int = 180;
+    public static inline var RIGHT_ANGLE:Int = 90;
+    public static inline var THIRTY_ANGLE:Int = 30;
+
+    private var ballAngle:Float;
+    private var speed:Float;
 
     /**
      * Constructor of a Ball object.
@@ -48,8 +53,8 @@ class Ball extends FlxSprite
     {
         super(X, Y);
         makeGraphic(SPRITE_SIZE, SPRITE_SIZE, color);
-        _movementBallAngle = initializeMovementDirection();
-        _speed = INITIAL_SPEED;
+        ballAngle = this.initializeMovementDirection();
+        speed = INITIAL_SPEED;
     }
 
     /**
@@ -57,9 +62,9 @@ class Ball extends FlxSprite
      *  
      *  @param elapsed - 
      **/
-    override public function update(elapsed:Float) 
+    override public function update(elapsed:Float)
     {
-        movement();
+        this.movement();
         super.update(elapsed);
     }
 
@@ -69,9 +74,9 @@ class Ball extends FlxSprite
     public function angleAfterCollideWithWall()
     {
         // The ball touch the top or the bottom of the game screen.
-        if (y == 0 || y == Main.HEIGHT - SPRITE_SIZE) 
+        if (y == 0 || y == Main.HEIGHT - SPRITE_SIZE)
         {
-            _movementBallAngle = -_movementBallAngle;
+            ballAngle = -ballAngle;
         }
     }
 
@@ -81,6 +86,7 @@ class Ball extends FlxSprite
      *  To generate more difficulties during the party, 
      *  each collision with the racket increase the speed of the ball
      *  until a maximum speed define in game.
+     *  
      *  Likewise, each bounce on the racket suffered a random
      *  angle modification to preventing the player to
      *  compute easily the next impact of the ball on his goal.
@@ -90,20 +96,22 @@ class Ball extends FlxSprite
         // Compute the angle when the ball is in collision with right racket.
         if (x == SPRITE_SIZE || x == Main.WIDTH - SPRITE_SIZE)
         {
-            _movementBallAngle = _movementBallAngle * -1;
+            ballAngle = ballAngle * -1;
         }
         // Compute the angle when the ball is in collision with left racket.
         else
         {
-            _movementBallAngle = (_movementBallAngle + 180) * -1;
+            ballAngle = (ballAngle + FLAT_ANGLE) * -1;
         }
 
-        var bounceModifier = Math.random() * 30 - 15;
-        _movementBallAngle += bounceModifier;
+        // Randomize bounce modifier bewteen -15 and 15 degrees.
+        var bounceModifier = Math.random() * THIRTY_ANGLE - (THIRTY_ANGLE / 2);
+        ballAngle += bounceModifier;
 
-        if (_speed < MAX_SPEED)
+        // Increase ball speed when ball touch rackets.
+        if (speed < MAX_SPEED)
         {
-            _speed += INCREASE_BALL_SPEED;
+            speed += INCREASE_BALL_SPEED;
         }
     }
 
@@ -117,7 +125,7 @@ class Ball extends FlxSprite
      */
     public function isInTheGoal():Bool
     {
-        return this.isInLeftGoal() || this.isInRightGoal();  
+        return this.isInLeftGoal() || this.isInRightGoal();
     }
 
     /**
@@ -137,7 +145,7 @@ class Ball extends FlxSprite
      *  @return Bool
      *   The ball is in the right goal. 
      */
-    public function isInRightGoal():Bool 
+    public function isInRightGoal():Bool
     {
         return x > Main.WIDTH - SPRITE_SIZE;
     }
@@ -145,21 +153,21 @@ class Ball extends FlxSprite
     /**
      *  This function is used to move the ball.
      */
-    private function movement() 
+    private function movement()
     {
-        velocity.set(_speed, 0);
-        velocity.rotate(FlxPoint.weak(0, 0), _movementBallAngle);
+        velocity.set(speed, 0);
+        velocity.rotate(FlxPoint.weak(0, 0), ballAngle);
     }
 
     /**
      *  This function initialize the first movement of the 
      *  ball when the party is started.
      */
-    private function initializeMovementDirection() 
+    private function initializeMovementDirection():Float
     {
-        var angle = Math.random() * 90 - 45;
+        var angle = Math.random() * RIGHT_ANGLE - (RIGHT_ANGLE / 2);
         var direction = Math.round(Math.random());
 
-        return direction == 0 ? angle : angle + 180;
+        return direction == 0 ? angle : angle + FLAT_ANGLE;
     }
 }

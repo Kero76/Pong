@@ -24,15 +24,17 @@ package state;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 
-class ScoreState extends FlxState 
+class ScoreState extends FlxState
 {
-    static inline var SCORE_FONT_SIZE:Int = 64;
+    public static inline var SCORE_FONT_SIZE:Int = 64;
+    public static inline var ADVICE_FONT_SIZE:Int = 16;
+
     private var txtScore:FlxText;
+    private var txtAdvice:FlxText;
+    private var playState:FlxState;
     private var scorePlayerOne:Int;
     private var scorePlayerTwo:Int;
-    private var playState:FlxState;
 
     /**
      *  Create new instance of ScoreState.
@@ -40,7 +42,7 @@ class ScoreState extends FlxState
      *  @param scorePlayerOne - The current score of the player one.
      *  @param scorePlayerTwo - The current score of the player two.
      */
-    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int) 
+    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int)
     {
         this.scorePlayerOne = scorePlayerOne;
         this.scorePlayerTwo = scorePlayerTwo;
@@ -52,10 +54,13 @@ class ScoreState extends FlxState
      */
     override public function create()
     {
-        var showScore = this.scorePlayerOne + " - " + this.scorePlayerTwo;
-        this.txtScore = new FlxText(0, 0, 0, "Score\n" + showScore, SCORE_FONT_SIZE);
-        this.txtScore.screenCenter();
-        add(this.txtScore);
+        var showScore = scorePlayerOne + " - " + scorePlayerTwo;
+        txtScore = new FlxText(0, 0, 0, "Score\n" + showScore, SCORE_FONT_SIZE);
+        txtScore.screenCenter();
+        add(txtScore);
+
+        txtAdvice = new FlxText(txtScore.x, txtScore.y + txtScore.height + 10, 0, "Press Enter to play", ADVICE_FONT_SIZE);
+        add(txtAdvice);
 
         super.create();
     }
@@ -68,7 +73,7 @@ class ScoreState extends FlxState
     override public function update(elapsed:Float)
     {
         // When players are ready, start game.
-        if (FlxG.keys.pressed.ENTER || FlxG.keys.pressed.SPACE) 
+        if (FlxG.keys.pressed.ENTER)
         {
             FlxG.switchState(new PlayState(this.scorePlayerOne, this.scorePlayerTwo));
         }

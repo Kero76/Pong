@@ -27,14 +27,15 @@ import flixel.util.FlxColor;
 import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxPoint;
 
-class Racket extends FlxSprite 
+class Racket extends FlxSprite
 {
+    // Static attributes.
     public static inline var WIDTH:Int = 12;
     public static inline var HEIGHT:Int = 100;
-    public static inline var MOVEMENT_SPEED:Float = 300;
+    public static inline var MOVEMENT_SPEED:Int = 300;
+    public static inline var RIGHT_ANGLE:Int = 90;
 
     private var canMove:Bool;
-    private var directionToMove:MoveDirection;
     private var keys:Array<FlxKey>;
 
     @:isVar()
@@ -84,15 +85,15 @@ class Racket extends FlxSprite
             up = down = false;
         }
 
-        if (up || down) 
+        if (up || down)
         {
             if (up)
             {
-                mA = -90;
+                mA = -RIGHT_ANGLE;
             }
             else if (down)
             {
-                mA = 90;
+                mA = RIGHT_ANGLE;
             }
 
             velocity.set(Racket.MOVEMENT_SPEED, 0);
@@ -103,9 +104,9 @@ class Racket extends FlxSprite
     /**
      *  Get the score of the racket.
      */
-    public function get_score()
+    public function get_score():Int
     {
-        return this.score;
+        return score;
     }
 
     /**
