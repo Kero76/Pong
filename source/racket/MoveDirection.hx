@@ -22,13 +22,13 @@
 package racket;
 
 /**
-    An enumerator to indicate all possible direction 
-    to move Racket and Ball.
-**/
-enum MoveDirection 
+ *  An enumerator to indicate all direction available 
+ *  to move player Racket.
+ */
+enum MoveDirection
 {
-    UP;
-    DOWN;
-    LEFT;
-    RIGHT;
+    Up;
+    Down;
+    Left;
+    Right;
 }
