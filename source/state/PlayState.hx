@@ -31,8 +31,8 @@ import flixel.system.FlxSound;
 import ball.Ball;
 import racket.Racket;
 
-class PlayState extends FlxState {
-
+class PlayState extends FlxState
+{
     // Sounds 
     private var sndRacketBall:FlxSound;
     private var sndBallWall:FlxSound;
@@ -62,12 +62,13 @@ class PlayState extends FlxState {
         this.scorePlayerTwo = scorePlayerTwo;
         super();
     }
-    
+
     /**
       * Constructor of the PlayState state.
       * It initialize the object present on game (Rackets and Ball).
       */
-    override public function create() {
+    override public function create()
+    {
         this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S], this.scorePlayerOne);
         add(this.leftRacketPlayer);
 
@@ -97,10 +98,11 @@ class PlayState extends FlxState {
     /**
       * This function is call after each frame.
       *  
-      * @param elapsed
+      * @param elapsed - 
       */
-    override public function update(elapsed:Float) {
-        if (FlxG.keys.pressed.R) 
+    override public function update(elapsed:Float)
+    {
+        if (FlxG.keys.pressed.R)
         {
             this.resetScreenGame();
         }
@@ -130,12 +132,12 @@ class PlayState extends FlxState {
             this.sndBallWall.play(true);
         }
 
-        if (FlxG.collide(this.ball, this.racketGroup)) 
+        if (FlxG.collide(this.ball, this.racketGroup))
         {
             this.ball.angleAfterCollideWithRacket();
             this.sndRacketBall.play(true);
         }
-        
+
         super.update(elapsed);
     }
 
