@@ -19,7 +19,7 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package ;
+package;
 
 import flixel.FlxG;
 import flixel.FlxGame;
@@ -30,21 +30,21 @@ import state.MenuState;
 
 class Main extends Sprite
 {
-	public static var WIDTH:Int = 640;
-	public static var HEIGHT:Int = 480;
+    public static var WIDTH:Int = 640;
+    public static var HEIGHT:Int = 480;
 
-	public function new()
-	{
-		super();
-		addChild(new FlxGame(Main.WIDTH, Main.HEIGHT, MenuState));
+    public function new()
+    {
+        super();
+        addChild(new FlxGame(Main.WIDTH, Main.HEIGHT, MenuState));
 
-		// Load save if player restart game with specific settings.
-		var save:FlxSave = new FlxSave();
-		save.bind("settings");
-		if (save.data.volume != null) 
-		{
-			FlxG.sound.volume = save.data.volume;
-		}
-		save.close();
-	}
+        // Load save if player restart game with specific settings.
+        var save:FlxSave = new FlxSave();
+        save.bind("settings");
+        if (save.data.volume != null)
+        {
+            FlxG.sound.volume = save.data.volume;
+        }
+        save.close();
+    }
 }
