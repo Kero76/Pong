@@ -20,10 +20,6 @@
             "type": "ArrayLiteral"
         },
         {
-            "props": {},
-            "type": "AvoidInlineConditionals"
-        },
-        {
             "props": {
                 "severity": "INFO"
             },
@@ -206,17 +202,6 @@
         },
         {
             "props": {
-                "ignoreNumbers": [
-                    -1,
-                    0,
-                    1,
-                    2
-                ]
-            },
-            "type": "MagicNumber"
-        },
-        {
-            "props": {
                 "ignoreExtern": true,
                 "format": "^[a-z][a-zA-Z0-9]*$",
                 "tokens": []
@@ -230,13 +215,6 @@
                 "maxTotal": 100
             },
             "type": "MethodCount"
-        },
-        {
-            "props": {
-                "max": 50,
-                "countEmpty": false
-            },
-            "type": "MethodLength"
         },
         {
             "props": {
@@ -368,22 +346,10 @@
         },
         {
             "props": {
-                "ignoreExtern": true,
-                "format": "^(_|[a-z][a-zA-Z0-9]*$)",
-                "tokens": []
-            },
-            "type": "ParameterName"
-        },
-        {
-            "props": {
                 "max": 7,
                 "ignoreOverriddenMethods": false
             },
             "type": "ParameterNumber"
-        },
-        {
-            "props": {},
-            "type": "PublicAccessor"
         },
         {
             "props": {
