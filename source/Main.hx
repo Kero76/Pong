@@ -30,8 +30,8 @@ import state.MenuState;
 
 class Main extends Sprite
 {
-    public static var WIDTH:Int = 640;
-    public static var HEIGHT:Int = 480;
+    public static inline var WIDTH:Int = 640;
+    public static inline var HEIGHT:Int = 480;
 
     public function new()
     {
