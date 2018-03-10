@@ -39,15 +39,17 @@ class Ai extends FlxSprite
     public var score(default, default):Int;
 
     @:isVar()
-    public var ballPosition(default, default):Float;
+    public var ballXPosition(default, default):Float;
+    @:isVar()
+    public var ballYPosition(default, default):Float;
 
     /**
-     *  Constructor for a Racket.
+     *  Constructor for an Ai.
      *  
-     *  @param X - Initial X position of the Racket.
-     *  @param Y - Initial Y position of the Racket.
-     *  @param color - Color of the Racket.
-     *  @param score - Current score of the racket.
+     *  @param X - Initial X position of the Racket used by the AI.
+     *  @param Y - Initial Y position of the Racket used by the AI.
+     *  @param color - Color of the Racket used by the AI.
+     *  @param score - Current score of the racket used by the AI.
      */
     public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, ?score:Int)
     {
@@ -58,11 +60,10 @@ class Ai extends FlxSprite
     }
 
     /**
-        This function is call after each frame.
-        It used to represent the movement of the Racket on the PlayState screen.
-
-        @param elapsed
-    **/
+     *  The movement of the AI.
+     *  
+     *  @param elapsed - 
+     */
     override public function update(elapsed:Float)
     {
         movement();
@@ -76,28 +77,36 @@ class Ai extends FlxSprite
     {
         var mA:Float = 0;
         var middleRacket:Float = HEIGHT / 2;
-        
-        /* 
-        / If the position of the ball is upper to the current 
-        /* y position, then AI move up the racket.
-        /**
-         *  Three possible cases : 
-         *   - The ball is upper to the ai position : Ai move up.
-         *   - The ball is down to the ai position : Ai move down.
-         *   - The ball and the ai have the same position : Ai not move. 
-         */
-        if (ballPosition > y + middleRacket) {
-            mA = RIGHT_ANGLE;
-        }
-        else if (ballPosition < y + middleRacket)
+        var movedArea = (Main.WIDTH / 5) * 2.5;
+
+        if (movedArea < (Main.WIDTH - ballXPosition))
         {
-            mA = -RIGHT_ANGLE;
+            mA = 0;
         }
         else
         {
-            mA = 0;
-        } 
-
+            /* 
+            / If the position of the ball is upper to the current 
+            /* y position, then AI move up the racket.
+            /**
+             *  Three possible cases : 
+             *   - The ball is upper to the ai position : Ai move up.
+             *   - The ball is down to the ai position : Ai move down.
+             *   - The ball and the ai have the same position : Ai not move. 
+             */
+            if (ballYPosition > y + middleRacket) {
+                mA = RIGHT_ANGLE;
+            }
+            else if (ballYPosition < y + middleRacket)
+            {
+                mA = -RIGHT_ANGLE;
+            }
+            else
+            {
+                mA = 0;
+            } 
+        }
+        
         velocity.set(Ai.MOVEMENT_SPEED, 0);
         velocity.rotate(FlxPoint.weak(0, 0), mA);
     }
@@ -121,20 +130,38 @@ class Ai extends FlxSprite
     }
 
     /**
-     *  Get the ball position of the ball.
+     *  Get the x ball position of the ball.
      */
-    public function get_ballPosition():Float
+    public function get_ballXPosition():Float
     {
-        return ballPosition;
+        return ballXPosition;
     }
 
     /**
-     *  Set the new position of the ball.
+     *  Set the new x position of the ball.
      *  
-     *  @param ballPosition - New position of the ball.
+     *  @param ballXPosition - New position of the ball.
      */
-    public function set_ballPosition(ballPosition:Float)
+    public function set_ballXPosition(ballXPosition:Float)
     {
-        this.ballPosition = ballPosition;
+        this.ballXPosition = ballXPosition;
+    }
+
+    /**
+     *  Get the y ball position of the ball.
+     */
+    public function get_ballYPosition():Float
+    {
+        return ballYPosition;
+    }
+
+    /**
+     *  Set the new y position of the ball.
+     *  
+     *  @param ballYPosition - New position of the ball.
+     */
+    public function set_ballYPosition(ballYPosition:Float)
+    {
+        this.ballYPosition = ballYPosition;
     }
 }

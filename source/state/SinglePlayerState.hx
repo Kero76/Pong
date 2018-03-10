@@ -140,7 +140,8 @@ class SinglePlayerState extends FlxState
         }
 
         // Update Ai movement.
-        this.ai.set_ballPosition(this.ball.y);
+        this.ai.set_ballXPosition(this.ball.x);
+        this.ai.set_ballYPosition(this.ball.y);
 
         super.update(elapsed);
     }
