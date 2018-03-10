@@ -1,5 +1,9 @@
 package ai;
 
+import flixel.FlxSprite;
+import flixel.math.FlxPoint;
+import flixel.util.FlxColor;
+
 class Ai extends FlxSprite 
 {
     // Static attributes.
@@ -22,14 +26,12 @@ class Ai extends FlxSprite
      *  @param X - Initial X position of the Racket.
      *  @param Y - Initial Y position of the Racket.
      *  @param color - Color of the Racket.
-     *  @param keys - Control associate to move the racket. 
      *  @param score - Current score of the racket.
      */
-    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, keys:Array<FlxKey>, ?score:Int)
+    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, ?score:Int)
     {
         super(X, Y);
         makeGraphic(WIDTH, HEIGHT, color);
-        this.keys = keys;
         this.score = score;
         drag.y = 1600;
     }
@@ -55,7 +57,7 @@ class Ai extends FlxSprite
         
         // If the position of the ball is upper to the current 
         // y position, then AI move up the racket.
-        if (ballPosition.y > y) {
+        if (ballPosition > y) {
             mA = -RIGHT_ANGLE;
         }
         // Otherwise, the AI move down the racket.
@@ -64,7 +66,7 @@ class Ai extends FlxSprite
             mA = RIGHT_ANGLE;
         }
 
-        velocity.set(Racket.MOVEMENT_SPEED, 0);
+        velocity.set(Ai.MOVEMENT_SPEED, 0);
         velocity.rotate(FlxPoint.weak(0, 0), mA);
     }
 
@@ -89,7 +91,7 @@ class Ai extends FlxSprite
     /**
      *  Get the ball position of the ball.
      */
-    public function get_ballPosition():Int
+    public function get_ballPosition():Float
     {
         return ballPosition;
     }
@@ -99,7 +101,7 @@ class Ai extends FlxSprite
      *  
      *  @param ballPosition - New position of the ball.
      */
-    public function set_ballPosition(ballPosition:Int)
+    public function set_ballPosition(ballPosition:Float)
     {
         this.ballPosition = ballPosition;
     }
