@@ -33,6 +33,9 @@ class MenuState extends FlxState
     public static inline var TITLE_FONT_SIZE:Int = 64;
     public static inline var TRANSITION_TIME:Float = .33;
 
+    public static inline var SINGLE_PLAYER_MODE:Bool = true;
+    public static inline var MULTI_PLAYER_MODE:Bool = false;
+
     private var btnTwoPlayers:FlxButton;
     private var btnSinglePlayer:FlxButton;
     private var btnOption:FlxButton;
@@ -48,7 +51,7 @@ class MenuState extends FlxState
         this.txtTitleGame.screenCenter();
         add(this.txtTitleGame);
 
-        this.btnSinglePlayer = new FlxButton(this.txtTitleGame.x - 50, this.txtTitleGame.y + BTN_MARGE, "Single Player", this.clickPlayTwoPlayers);
+        this.btnSinglePlayer = new FlxButton(this.txtTitleGame.x - 50, this.txtTitleGame.y + BTN_MARGE, "Single Player", this.clickPlaySinglePlayer);
         this.btnSinglePlayer.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
         add(this.btnSinglePlayer);
 
@@ -81,7 +84,7 @@ class MenuState extends FlxState
     {
         FlxG.camera.fade(FlxColor.BLACK, TRANSITION_TIME, true, function()
         {
-            FlxG.switchState(new ScoreState(0, 0));
+            FlxG.switchState(new ScoreState(0, 0, SINGLE_PLAYER_MODE));
         });
     }
 
@@ -93,7 +96,7 @@ class MenuState extends FlxState
     {
         FlxG.camera.fade(FlxColor.BLACK, TRANSITION_TIME, true, function()
         {
-            FlxG.switchState(new ScoreState(0, 0));
+            FlxG.switchState(new ScoreState(0, 0, MULTI_PLAYER_MODE));
         });
     }
 

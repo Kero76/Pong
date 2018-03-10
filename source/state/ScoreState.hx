@@ -30,22 +30,28 @@ class ScoreState extends FlxState
     public static inline var SCORE_FONT_SIZE:Int = 64;
     public static inline var ADVICE_FONT_SIZE:Int = 16;
 
+    // Sprite attributes.
     private var txtScore:FlxText;
     private var txtAdvice:FlxText;
     private var playState:FlxState;
+    
+    // Another attributes.
     private var scorePlayerOne:Int;
     private var scorePlayerTwo:Int;
+    private var singlePlayerMode:Bool;
 
     /**
      *  Create new instance of ScoreState.
      *  
      *  @param scorePlayerOne - The current score of the player one.
      *  @param scorePlayerTwo - The current score of the player two.
+     *  @param singlePlayerMode - Indicate if the game is start in single or multiplayer mode.
      */
-    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int)
+    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int, singlePlayerMode:Bool)
     {
         this.scorePlayerOne = scorePlayerOne;
         this.scorePlayerTwo = scorePlayerTwo;
+        this.singlePlayerMode = singlePlayerMode;
         super();
     }
 
@@ -75,7 +81,21 @@ class ScoreState extends FlxState
         // When players are ready, start game.
         if (FlxG.keys.pressed.ENTER)
         {
-            FlxG.switchState(new PlayState(this.scorePlayerOne, this.scorePlayerTwo));
+            if (singlePlayerMode)
+            {   
+                FlxG.switchState(new SinglePlayerState(
+                    this.scorePlayerOne,
+                    this.scorePlayerTwo)
+                );
+            }
+            else
+            {
+                FlxG.switchState(new MultiPlayersState(
+                    this.scorePlayerOne,
+                    this.scorePlayerTwo)
+                );
+            }
+            
         }
 
         super.update(elapsed);
