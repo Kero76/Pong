@@ -19,32 +19,15 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package ai;
+package racket;
 
-import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 
-class Ai extends FlxSprite 
+class AIRacket extends AbstractRacket
 {
-    // Static attributes.
-    public static inline var WIDTH:Int = 12;
-    public static inline var HEIGHT:Int = 100;
-    public static inline var MOVEMENT_SPEED:Int = 300;
-    public static inline var RIGHT_ANGLE:Int = 90;
-
-    private var canMove:Bool;
-
-    @:isVar()
-    public var score(default, default):Int;
-
-    @:isVar()
-    public var ballXPosition(default, default):Float;
-    @:isVar()
-    public var ballYPosition(default, default):Float;
-
     /**
-     *  Constructor for an Ai.
+     *  Constructor of an AIRacket.
      *  
      *  @param X - Initial X position of the Racket used by the AI.
      *  @param Y - Initial Y position of the Racket used by the AI.
@@ -53,33 +36,31 @@ class Ai extends FlxSprite
      */
     public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, ?score:Int)
     {
-        super(X, Y);
-        makeGraphic(WIDTH, HEIGHT, color);
-        this.score = score;
-        drag.y = 1600;
+        super(X, Y, color, score);
     }
 
     /**
-     *  The movement of the AI.
+     *  Method call after each frame execute on game.
+     *  It contains only the method movement 
+     *  who is override on child classes.
      *  
      *  @param elapsed - 
      */
     override public function update(elapsed:Float)
     {
-        movement();
         super.update(elapsed);
     }
 
     /**
      *  This function control the movement of the Racket.
      */
-    private function movement()
-    {
+    override public function move(?point:FlxPoint)
+    {        
         var mA:Float = 0;
-        var middleRacket:Float = HEIGHT / 2;
+        var middleRacket:Float = AbstractRacket.HEIGHT / 2;
         var movedArea = (Main.WIDTH / 5) * 2.5;
 
-        if (movedArea < (Main.WIDTH - ballXPosition))
+        if (movedArea < (Main.WIDTH - point.x))
         {
             mA = 0;
         }
@@ -94,12 +75,12 @@ class Ai extends FlxSprite
              *   - The ball is down to the ai position : Ai move down.
              *   - The ball and the ai have the same position : Ai not move. 
              */
-            if (ballYPosition > y + middleRacket) {
-                mA = RIGHT_ANGLE;
+            if (point.y > y + middleRacket) {
+                mA = AbstractRacket.RIGHT_ANGLE;
             }
-            else if (ballYPosition < y + middleRacket)
+            else if (point.y < y + middleRacket)
             {
-                mA = -RIGHT_ANGLE;
+                mA = -AbstractRacket.RIGHT_ANGLE;
             }
             else
             {
@@ -107,61 +88,7 @@ class Ai extends FlxSprite
             } 
         }
         
-        velocity.set(Ai.MOVEMENT_SPEED, 0);
+        velocity.set(AbstractRacket.MOVEMENT_SPEED, 0);
         velocity.rotate(FlxPoint.weak(0, 0), mA);
-    }
-
-    /**
-     *  Get the score of the racket.
-     */
-    public function get_score():Int
-    {
-        return score;
-    }
-
-    /**
-     *  Set the score of the racket.
-     *  
-     *  @param score - New score for the racket.
-     */
-    public function set_score(score:Int)
-    {
-        this.score = score;
-    }
-
-    /**
-     *  Get the x ball position of the ball.
-     */
-    public function get_ballXPosition():Float
-    {
-        return ballXPosition;
-    }
-
-    /**
-     *  Set the new x position of the ball.
-     *  
-     *  @param ballXPosition - New position of the ball.
-     */
-    public function set_ballXPosition(ballXPosition:Float)
-    {
-        this.ballXPosition = ballXPosition;
-    }
-
-    /**
-     *  Get the y ball position of the ball.
-     */
-    public function get_ballYPosition():Float
-    {
-        return ballYPosition;
-    }
-
-    /**
-     *  Set the new y position of the ball.
-     *  
-     *  @param ballYPosition - New position of the ball.
-     */
-    public function set_ballYPosition(ballYPosition:Float)
-    {
-        this.ballYPosition = ballYPosition;
     }
 }

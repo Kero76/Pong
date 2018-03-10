@@ -25,7 +25,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
 
-import racket.Racket;
+import racket.AbstractRacket;
 
 class Ball extends FlxSprite
 {
@@ -136,7 +136,7 @@ class Ball extends FlxSprite
      */
     public function isInLeftGoal():Bool
     {
-        return x < (SPRITE_SIZE - Racket.WIDTH);
+        return x < (SPRITE_SIZE - AbstractRacket.WIDTH);
     }
 
     /**

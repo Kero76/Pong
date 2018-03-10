@@ -23,24 +23,28 @@ package state;
 
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.math.FlxPoint;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.system.FlxSound;
 
 import ball.Ball;
-import racket.Racket;
+import game.GameMode;
+import racket.AbstractRacket;
+import racket.AIRacket;
+import racket.PlayerRacket;
 
-class MultiPlayersState extends FlxState
+class PlayState extends FlxState
 {
     // Sounds 
     private var sndRacketBall:FlxSound;
     private var sndBallWall:FlxSound;
 
     // Models 
-    private var leftRacketPlayer:Racket;
-    private var rightRacketPlayer:Racket;
     private var ball:Ball;
+    private var leftRacketPlayer:AbstractRacket;
+    private var rightRacketPlayer:AbstractRacket;
 
     // Groups
     private var collideWall:FlxGroup;
@@ -49,32 +53,63 @@ class MultiPlayersState extends FlxState
     // Another variables
     private var scorePlayerOne:Int;
     private var scorePlayerTwo:Int;
+    private var gameMode:GameMode;
 
     /**
-     *  Constructor of MultiPlayersState.
+     *  Constructor of PlayState.
      *  
      *  @param scorePlayerOne - The score of the player one.
-     *  @param scorePlayerTwo - The score of the player two.
+     *  @param scorePlayerTwo - The score of the Ai.
+     *  @param gameMode - The game mode (single or multiplayer)
      */
-    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int)
+    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int, gameMode:GameMode)
     {
         this.scorePlayerOne = scorePlayerOne;
         this.scorePlayerTwo = scorePlayerTwo;
+        this.gameMode = gameMode;
         super();
     }
 
     /**
-      * Constructor of the MultiPlayersState state.
+      * Constructor of the PlayState state.
       * It initialize the object present on game (Rackets and Ball).
       */
     override public function create()
     {
-        this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S], this.scorePlayerOne);
+        #if FLX_MOUSE
+        FlxG.mouse.visible = false;
+        #end
+
+        this.leftRacketPlayer = new PlayerRacket(
+            0,
+            FlxG.height / 2,
+            FlxColor.BLUE,
+            this.scorePlayerOne,
+            [Z, S]
+        );
         add(this.leftRacketPlayer);
-        
-        this.rightRacketPlayer = new Racket(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, [P, M], this.scorePlayerTwo);
+
+        if (gameMode == GameMode.SINGLE_PLAYER)
+        {
+            this.rightRacketPlayer = new AIRacket(
+                FlxG.width - AbstractRacket.WIDTH,
+                FlxG.height / 2,
+                FlxColor.RED,
+                this.scorePlayerTwo
+            );
+        }
+        else
+        {
+            this.rightRacketPlayer = new PlayerRacket(
+                FlxG.width - AbstractRacket.WIDTH,
+                FlxG.height / 2,
+                FlxColor.RED,
+                this.scorePlayerTwo,
+                [P, M]
+            );
+        }
         add(this.rightRacketPlayer);
-       
+
         this.ball = new Ball(0, 0, FlxColor.WHITE);
         this.ball.screenCenter();
         add(this.ball);
@@ -138,6 +173,17 @@ class MultiPlayersState extends FlxState
             this.sndRacketBall.play(true);
         }
 
+        // Update Ai movement.
+        if (gameMode == GameMode.SINGLE_PLAYER)
+        {
+            var point:FlxPoint = new FlxPoint(
+                this.ball.x,
+                this.ball.y
+            );
+            this.rightRacketPlayer.move(point);
+            this.rightRacketPlayer.update(elapsed);
+        }
+
         super.update(elapsed);
     }
 
@@ -149,7 +195,7 @@ class MultiPlayersState extends FlxState
         FlxG.switchState(new ScoreState(
             this.leftRacketPlayer.get_score(),
             this.rightRacketPlayer.get_score(),
-            false)
-        );
+            gameMode
+        ));
     }
 }

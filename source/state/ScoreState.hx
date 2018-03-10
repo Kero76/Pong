@@ -25,6 +25,8 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
 
+import game.GameMode;
+
 class ScoreState extends FlxState
 {
     public static inline var SCORE_FONT_SIZE:Int = 64;
@@ -38,20 +40,19 @@ class ScoreState extends FlxState
     // Another attributes.
     private var scorePlayerOne:Int;
     private var scorePlayerTwo:Int;
-    private var singlePlayerMode:Bool;
+    private var gameMode:GameMode;
 
     /**
      *  Create new instance of ScoreState.
      *  
      *  @param scorePlayerOne - The current score of the player one.
      *  @param scorePlayerTwo - The current score of the player two.
-     *  @param singlePlayerMode - Indicate if the game is start in single or multiplayer mode.
      */
-    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int, singlePlayerMode:Bool)
+    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int, gameMode:GameMode)
     {
         this.scorePlayerOne = scorePlayerOne;
         this.scorePlayerTwo = scorePlayerTwo;
-        this.singlePlayerMode = singlePlayerMode;
+        this.gameMode = gameMode;
         super();
     }
 
@@ -72,30 +73,22 @@ class ScoreState extends FlxState
     }
 
     /**
-     * This function is call after each frame..
+     *  This function is call after each frame, 
+     *  and check when the player is ready to play when he press ENTER.
      *  
      * @param elapsed
      */
     override public function update(elapsed:Float)
     {
-        // When players are ready, start game.
+        // When players are ready, start game to press ENTER.
         if (FlxG.keys.pressed.ENTER)
         {
-            if (singlePlayerMode)
-            {   
-                FlxG.switchState(new SinglePlayerState(
-                    this.scorePlayerOne,
-                    this.scorePlayerTwo)
-                );
-            }
-            else
-            {
-                FlxG.switchState(new MultiPlayersState(
-                    this.scorePlayerOne,
-                    this.scorePlayerTwo)
-                );
-            }
-            
+            FlxG.switchState(new PlayState(
+                this.scorePlayerOne,
+                this.scorePlayerTwo,
+                this.gameMode
+                )
+            );
         }
 
         super.update(elapsed);
