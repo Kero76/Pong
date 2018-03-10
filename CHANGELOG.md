@@ -7,6 +7,9 @@
 * Add a bounce modifier when the ball encounter a Racket.
 * Add Option menu with :
     * Change sound volume.
+* Add new game mode :
+    * Single player to play with a simple AI.
+    * Multiplayer to play with a friend.
 
 ## Pong v0.1-SNAPSHOT - Release March 01, 2018
 
