@@ -161,6 +161,7 @@ class PlayState extends FlxState
 
         // Collision section.
         FlxG.collide(this.collideWall, this.racketGroup);
+
         if (FlxG.collide(this.collideWall, this.ball))
         {
             this.ball.angleAfterCollideWithWall();
@@ -173,6 +174,9 @@ class PlayState extends FlxState
             this.sndRacketBall.play(true);
         }
 
+        // Call super.update method.
+        super.update(elapsed);
+
         // Update Ai movement.
         if (gameMode == GameMode.SINGLE_PLAYER)
         {
@@ -183,8 +187,6 @@ class PlayState extends FlxState
             this.rightRacketPlayer.move(point);
             this.rightRacketPlayer.update(elapsed);
         }
-
-        super.update(elapsed);
     }
 
     /**

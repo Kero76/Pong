@@ -63,6 +63,7 @@ class AIRacket extends AbstractRacket
         if (movedArea < (Main.WIDTH - point.x))
         {
             mA = 0;
+            velocity.set(0, 0);
         }
         else
         {
@@ -75,7 +76,8 @@ class AIRacket extends AbstractRacket
              *   - The ball is down to the ai position : Ai move down.
              *   - The ball and the ai have the same position : Ai not move. 
              */
-            if (point.y > y + middleRacket) {
+            if (point.y > y + middleRacket)
+            {
                 mA = AbstractRacket.RIGHT_ANGLE;
             }
             else if (point.y < y + middleRacket)
@@ -85,10 +87,10 @@ class AIRacket extends AbstractRacket
             else
             {
                 mA = 0;
-            } 
+            }
+            velocity.set(AbstractRacket.MOVEMENT_SPEED, 0);
         }
         
-        velocity.set(AbstractRacket.MOVEMENT_SPEED, 0);
         velocity.rotate(FlxPoint.weak(0, 0), mA);
     }
 }
