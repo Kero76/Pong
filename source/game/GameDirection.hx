@@ -19,16 +19,10 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package racket;
+package game;
 
-/**
-    An enumerator to indicate all possible direction 
-    to move Racket and Ball.
-**/
-enum MoveDirection 
+enum GameDirection
 {
     UP;
     DOWN;
-    LEFT;
-    RIGHT;
 }

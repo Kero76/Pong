@@ -24,15 +24,24 @@ package state;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 
-class ScoreState extends FlxState 
+import game.GameDirection;
+import game.GameMode;
+
+class ScoreState extends FlxState
 {
-    static inline var SCORE_FONT_SIZE:Int = 64;
+    public static inline var SCORE_FONT_SIZE:Int = 64;
+    public static inline var ADVICE_FONT_SIZE:Int = 16;
+
+    // Sprite attributes.
     private var txtScore:FlxText;
+    private var txtAdvice:FlxText;
+    private var playState:FlxState;
+
+    // Another attributes.
     private var scorePlayerOne:Int;
     private var scorePlayerTwo:Int;
-    private var playState:FlxState;
+    private var gameMode:GameMode;
 
     /**
      *  Create new instance of ScoreState.
@@ -40,10 +49,11 @@ class ScoreState extends FlxState
      *  @param scorePlayerOne - The current score of the player one.
      *  @param scorePlayerTwo - The current score of the player two.
      */
-    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int) 
+    override public function new(scorePlayerOne:Int, scorePlayerTwo:Int, gameMode:GameMode)
     {
         this.scorePlayerOne = scorePlayerOne;
         this.scorePlayerTwo = scorePlayerTwo;
+        this.gameMode = gameMode;
         super();
     }
 
@@ -52,25 +62,44 @@ class ScoreState extends FlxState
      */
     override public function create()
     {
-        var showScore = this.scorePlayerOne + " - " + this.scorePlayerTwo;
-        this.txtScore = new FlxText(0, 0, 0, "Score\n" + showScore, SCORE_FONT_SIZE);
-        this.txtScore.screenCenter();
-        add(this.txtScore);
+        var showScore = scorePlayerOne + " - " + scorePlayerTwo;
+        txtScore = new FlxText(0, 0, 0, "Score\n" + showScore, SCORE_FONT_SIZE);
+        txtScore.screenCenter();
+        add(txtScore);
+
+        txtAdvice = new FlxText(txtScore.x, txtScore.y + txtScore.height + 10, 0, "Press Enter to play", ADVICE_FONT_SIZE);
+        add(txtAdvice);
 
         super.create();
     }
 
     /**
-     * This function is call after each frame..
+     *  This function is call after each frame, 
+     *  and check when the player is ready to play when he press ENTER.
      *  
      * @param elapsed
      */
     override public function update(elapsed:Float)
     {
-        // When players are ready, start game.
-        if (FlxG.keys.pressed.ENTER || FlxG.keys.pressed.SPACE) 
+        // When players are ready, start game to press ENTER.
+        if (FlxG.keys.pressed.ENTER)
         {
-            FlxG.switchState(new PlayState(this.scorePlayerOne, this.scorePlayerTwo));
+            if (this.gameMode == GameMode.SINGLE_PLAYER)
+            {
+                playState = new SinglePlayerState(
+                    this.scorePlayerOne,
+                    this.scorePlayerTwo
+                );
+            }
+            else
+            {
+                playState = new MultiPlayersState(
+                    this.scorePlayerOne,
+                    this.scorePlayerTwo
+                );
+            }
+
+            FlxG.switchState(playState);
         }
 
         super.update(elapsed);

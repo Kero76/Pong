@@ -19,7 +19,10 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package;
+package game;
 
-@:build(flixel.system.FlxAssets.buildFileReferences("assets", true))
-class AssetPaths {}
+enum GameMode
+{
+    SINGLE_PLAYER;
+    MULTI_PLAYERS;
+}
