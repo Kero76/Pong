@@ -22,78 +22,33 @@
 package state;
 
 import flixel.FlxG;
-import flixel.FlxState;
-import flixel.util.FlxCollision;
+import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
-import flixel.group.FlxGroup;
-import flixel.system.FlxSound;
 
-import ai.Ai;
-import ball.Ball;
-import racket.Racket;
+import game.GameMode;
+import racket.AbstractRacket;
+import racket.AIRacket;
 
-class SinglePlayerState extends FlxState
+class SinglePlayerState extends PlayState
 {
-    // Sounds 
-    private var sndRacketBall:FlxSound;
-    private var sndBallWall:FlxSound;
-
-    // Models 
-    private var ai:Ai;
-    private var ball:Ball;
-    private var leftRacketPlayer:Racket;
-
-    // Groups
-    private var collideWall:FlxGroup;
-    private var racketGroup:FlxGroup;
-
-    // Another variables
-    private var scorePlayerOne:Int;
-    private var scorePlayerTwo:Int;
 
     /**
-     *  Constructor of PlayState.
+     *  Constructor of a SinglePlayerState
      *  
-     *  @param scorePlayerOne - The score of the player one.
-     *  @param scorePlayerTwo - The score of the Ai.
+     *  @param scorePlayerOne - Score for the player one.
+     *  @param scorePlayerTwo - Score for the player two.
      */
     override public function new(scorePlayerOne:Int, scorePlayerTwo:Int)
     {
-        this.scorePlayerOne = scorePlayerOne;
-        this.scorePlayerTwo = scorePlayerTwo;
-        super();
+        super(scorePlayerOne, scorePlayerTwo);
     }
 
     /**
-      * Constructor of the PlayState state.
-      * It initialize the object present on game (Rackets and Ball).
-      */
+     *  This function create on instance of SinglePlayerState.
+     */
     override public function create()
     {
-        this.leftRacketPlayer = new Racket(0, FlxG.height / 2, FlxColor.BLUE, [Z, S], this.scorePlayerOne);
-        add(this.leftRacketPlayer);
-
-        this.ai = new Ai(FlxG.width - Racket.WIDTH, FlxG.height / 2, FlxColor.RED, this.scorePlayerTwo);
-        add(this.ai);
-
-        this.ball = new Ball(0, 0, FlxColor.WHITE);
-        this.ball.screenCenter();
-        add(this.ball);
-
-        this.collideWall = FlxCollision.createCameraWall(FlxG.camera, true, 1, true);
-
-        this.racketGroup = new FlxGroup();
-        this.racketGroup.add(this.leftRacketPlayer);
-        this.racketGroup.add(this.ai);
-
-        this.scorePlayerOne = 0;
-        this.scorePlayerTwo = 0;
-
         super.create();
-
-        // Asset loading
-        this.sndRacketBall = FlxG.sound.load(AssetPaths.racket__ogg);
-        this.sndBallWall = FlxG.sound.load(AssetPaths.ball__ogg);
     }
 
     /**
@@ -103,58 +58,39 @@ class SinglePlayerState extends FlxState
       */
     override public function update(elapsed:Float)
     {
-        if (FlxG.keys.pressed.R)
-        {
-            this.resetScreenGame();
-        }
-
-        // If the ball is in one of the two goal, 
-        // the current round is complete and the score is updated.
-        if (this.ball.isInTheGoal())
-        {
-            if (this.ball.isInLeftGoal())
-            {
-                var newScore = this.ai.get_score() + 1;
-                this.ai.set_score(newScore);
-            }
-            if (this.ball.isInRightGoal())
-            {
-                var newScore = this.leftRacketPlayer.get_score() + 1;
-                this.leftRacketPlayer.set_score(newScore);
-            }
-            this.resetScreenGame();
-        }
-
-        // Collision section.
-        FlxG.collide(this.collideWall, this.racketGroup);
-        if (FlxG.collide(this.collideWall, this.ball))
-        {
-            this.ball.angleAfterCollideWithWall();
-            this.sndBallWall.play(true);
-        }
-
-        if (FlxG.collide(this.ball, this.racketGroup))
-        {
-            this.ball.angleAfterCollideWithRacket();
-            this.sndRacketBall.play(true);
-        }
-
-        // Update Ai movement.
-        this.ai.set_ballXPosition(this.ball.x);
-        this.ai.set_ballYPosition(this.ball.y);
-
+        // Call method from PlayState and move AI after.
         super.update(elapsed);
+        var point:FlxPoint = new FlxPoint(
+            this.ball.x,
+            this.ball.y
+        );
+        this.rightRacketPlayer.move(point);
+    }
+
+    /**
+     *  Instantiate Rackets and ball uses to play.
+     */
+    override public function instanciateModels()
+    {
+        super.instanciateModels();
+        this.rightRacketPlayer = new AIRacket(
+            FlxG.width - AbstractRacket.WIDTH,
+            FlxG.height / 2,
+            FlxColor.RED,
+            this.scorePlayerTwo
+        );
+        add(this.rightRacketPlayer);
     }
 
     /**
      * Reset all positions on the sprite present on game screen.
      */
-    private function resetScreenGame()
+    override public function resetScreenGame()
     {
         FlxG.switchState(new ScoreState(
             this.leftRacketPlayer.get_score(),
-            this.ai.get_score(),
-            true)
-        );
+            this.rightRacketPlayer.get_score(),
+            GameMode.SINGLE_PLAYER
+        ));
     }
 }

@@ -22,24 +22,14 @@
 package racket;
 
 import flixel.FlxG;
-import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.input.keyboard.FlxKey;
-import flixel.math.FlxPoint;
 
-class Racket extends FlxSprite
+class PlayerRacket extends AbstractRacket
 {
-    // Static attributes.
-    public static inline var WIDTH:Int = 12;
-    public static inline var HEIGHT:Int = 100;
-    public static inline var MOVEMENT_SPEED:Int = 300;
-    public static inline var RIGHT_ANGLE:Int = 90;
-
-    private var canMove:Bool;
+    // Attributes
     private var keys:Array<FlxKey>;
-
-    @:isVar()
-    public var score(default, default):Int;
 
     /**
      *  Constructor for a Racket.
@@ -47,34 +37,31 @@ class Racket extends FlxSprite
      *  @param X - Initial X position of the Racket.
      *  @param Y - Initial Y position of the Racket.
      *  @param color - Color of the Racket.
-     *  @param keys - Control associate to move the racket. 
      *  @param score - Current score of the racket.
+     *  @param keys - Control associate to move the racket. 
      */
-    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, keys:Array<FlxKey>, ?score:Int)
+    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, ?score:Int, keys:Array<FlxKey>)
     {
-        super(X, Y);
-        makeGraphic(WIDTH, HEIGHT, color);
+        super(X, Y, color, score);
         this.keys = keys;
-        this.score = score;
-        drag.y = 1600;
     }
 
     /**
-        This function is call after each frame.
-        It used to represent the movement of the Racket on the PlayState screen.
-
-        @param elapsed
-    **/
+     *  Method call after each frame execute on game.
+     *  It control the movement of the player during the game.
+     *  
+     *  @param elapsed - 
+     */
     override public function update(elapsed:Float)
     {
-        movement();
+        move();
         super.update(elapsed);
     }
 
     /**
         This function control the movement of the Racket.
     **/
-    private function movement()
+    override public function move(?point:FlxPoint)
     {
         var up:Bool = FlxG.keys.anyPressed([this.keys[0]]);
         var down:Bool = FlxG.keys.anyPressed([this.keys[1]]);
@@ -89,33 +76,15 @@ class Racket extends FlxSprite
         {
             if (up)
             {
-                mA = -RIGHT_ANGLE;
+                mA = -AbstractRacket.RIGHT_ANGLE;
             }
             else if (down)
             {
-                mA = RIGHT_ANGLE;
+                mA = AbstractRacket.RIGHT_ANGLE;
             }
 
-            velocity.set(Racket.MOVEMENT_SPEED, 0);
+            velocity.set(AbstractRacket.MOVEMENT_SPEED, 0);
             velocity.rotate(FlxPoint.weak(0, 0), mA);
         }
-    }
-
-    /**
-     *  Get the score of the racket.
-     */
-    public function get_score():Int
-    {
-        return score;
-    }
-
-    /**
-     *  Set the score of the racket.
-     *  
-     *  @param score - New score for the racket.
-     */
-    public function set_score(score:Int)
-    {
-        this.score = score;
     }
 }

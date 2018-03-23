@@ -25,7 +25,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
 
-import racket.Racket;
+import racket.AbstractRacket;
 
 class Ball extends FlxSprite
 {
@@ -64,8 +64,17 @@ class Ball extends FlxSprite
      **/
     override public function update(elapsed:Float)
     {
-        this.movement();
+        this.move();
         super.update(elapsed);
+    }
+
+    /**
+     *  This function is used to move the ball.
+     */
+    private function move()
+    {
+        velocity.set(speed, 0);
+        velocity.rotate(FlxPoint.weak(0, 0), ballAngle);
     }
 
     /**
@@ -136,7 +145,7 @@ class Ball extends FlxSprite
      */
     public function isInLeftGoal():Bool
     {
-        return x < (SPRITE_SIZE - Racket.WIDTH);
+        return x < (SPRITE_SIZE - AbstractRacket.WIDTH);
     }
 
     /**
@@ -148,15 +157,6 @@ class Ball extends FlxSprite
     public function isInRightGoal():Bool
     {
         return x > Main.WIDTH - SPRITE_SIZE;
-    }
-
-    /**
-     *  This function is used to move the ball.
-     */
-    private function movement()
-    {
-        velocity.set(speed, 0);
-        velocity.rotate(FlxPoint.weak(0, 0), ballAngle);
     }
 
     /**

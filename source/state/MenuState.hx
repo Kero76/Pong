@@ -27,14 +27,13 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 
+import game.GameMode;
+
 class MenuState extends FlxState
 {
     public static inline var BTN_MARGE:Int = 100;
     public static inline var TITLE_FONT_SIZE:Int = 64;
     public static inline var TRANSITION_TIME:Float = .33;
-
-    public static inline var SINGLE_PLAYER_MODE:Bool = true;
-    public static inline var MULTI_PLAYER_MODE:Bool = false;
 
     private var btnTwoPlayers:FlxButton;
     private var btnSinglePlayer:FlxButton;
@@ -51,15 +50,15 @@ class MenuState extends FlxState
         this.txtTitleGame.screenCenter();
         add(this.txtTitleGame);
 
-        this.btnSinglePlayer = new FlxButton(this.txtTitleGame.x - 50, this.txtTitleGame.y + BTN_MARGE, "Single Player", this.clickPlaySinglePlayer);
+        this.btnSinglePlayer = new FlxButton(this.txtTitleGame.x - 50, this.txtTitleGame.y + BTN_MARGE, "Single Player", this.clickPlaySinglePlayerButton);
         this.btnSinglePlayer.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
         add(this.btnSinglePlayer);
 
-        this.btnTwoPlayers = new FlxButton(this.btnSinglePlayer.x + BTN_MARGE, this.btnSinglePlayer.y, "Mutliplayer", this.clickPlayTwoPlayers);
+        this.btnTwoPlayers = new FlxButton(this.btnSinglePlayer.x + BTN_MARGE, this.btnSinglePlayer.y, "Mutliplayer", this.clickPlayMultiPlayersButton);
         this.btnTwoPlayers.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
         add(this.btnTwoPlayers);
 
-        this.btnOption = new FlxButton(this.btnTwoPlayers.x + BTN_MARGE, this.btnTwoPlayers.y, "Options", this.clickOption);
+        this.btnOption = new FlxButton(this.btnTwoPlayers.x + BTN_MARGE, this.btnTwoPlayers.y, "Options", this.clickOptionsButton);
         this.btnOption.onUp.sound = FlxG.sound.load(AssetPaths.select__ogg);
         add(this.btnOption);
 
@@ -80,23 +79,23 @@ class MenuState extends FlxState
      *  This function is call when a player would
      *  played in single player mode.
      */
-    private function clickPlaySinglePlayer()
+    private function clickPlaySinglePlayerButton()
     {
         FlxG.camera.fade(FlxColor.BLACK, TRANSITION_TIME, true, function()
         {
-            FlxG.switchState(new ScoreState(0, 0, SINGLE_PLAYER_MODE));
+            FlxG.switchState(new ScoreState(0, 0, GameMode.SINGLE_PLAYER));
         });
     }
 
     /**
-     *  This function is call when two would played
-     *  together in two players mode.
+     *  This function is call when a player would
+     *  played in single player mode.
      */
-    private function clickPlayTwoPlayers()
+    private function clickPlayMultiPlayersButton()
     {
         FlxG.camera.fade(FlxColor.BLACK, TRANSITION_TIME, true, function()
         {
-            FlxG.switchState(new ScoreState(0, 0, MULTI_PLAYER_MODE));
+            FlxG.switchState(new ScoreState(0, 0, GameMode.MULTI_PLAYERS));
         });
     }
 
@@ -104,7 +103,7 @@ class MenuState extends FlxState
      *  This function is call when a player would 
      *  consult the option screen to change settings on game.
      */
-    private function clickOption()
+    private function clickOptionsButton()
     {
         FlxG.camera.fade(FlxColor.BLACK, TRANSITION_TIME, true, function()
         {
