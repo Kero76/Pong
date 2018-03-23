@@ -13,11 +13,11 @@ To play at Pong, you muste have several ways :
 ### Commands
 
 * Player one (Red racket)
-    * Z to move up.
+    * Z or W to move up.
     * S to move down.
 * Player two (Right Racket)
     * P to move up
-    * M to move down.
+    * M or SEMICOLON to move down.
 * Score menu 
     * Press Enter to start new round.
 * Main / Option menu
@@ -48,7 +48,7 @@ You can find and download all images assets from all website specified below.
 
 ## Changelog
 
-* Pong v0.2-SNAPSHOT - Not Release Yet 
+* Pong v0.2-SNAPSHOT - Release March 23, 2018
 * Pong v0.1-SNAPSHOT - Release March 01, 2018
 
 ## License
@@ -59,3 +59,4 @@ This project is under [MIT licence](https://opensource.org/licenses/MIT).
 
 * Nicolas GILLE (<nic.gille@gmail.com>)
     * Developer
+    * Tester
