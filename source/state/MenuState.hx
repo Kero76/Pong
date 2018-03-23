@@ -98,7 +98,7 @@ class MenuState extends FlxState
             FlxG.switchState(new ScoreState(0, 0, GameMode.MULTI_PLAYERS));
         });
     }
-    
+
     /**
      *  This function is call when a player would 
      *  consult the option screen to change settings on game.

@@ -36,7 +36,7 @@ class ScoreState extends FlxState
     private var txtScore:FlxText;
     private var txtAdvice:FlxText;
     private var playState:FlxState;
-    
+
     // Another attributes.
     private var scorePlayerOne:Int;
     private var scorePlayerTwo:Int;
@@ -83,12 +83,22 @@ class ScoreState extends FlxState
         // When players are ready, start game to press ENTER.
         if (FlxG.keys.pressed.ENTER)
         {
-            FlxG.switchState(new PlayState(
-                this.scorePlayerOne,
-                this.scorePlayerTwo,
-                this.gameMode
-                )
-            );
+            if (this.gameMode == GameMode.SINGLE_PLAYER)
+            {
+                playState = new SinglePlayerState(
+                    this.scorePlayerOne,
+                    this.scorePlayerTwo
+                );
+            }
+            else
+            {
+                playState = new MultiPlayersState(
+                    this.scorePlayerOne,
+                    this.scorePlayerTwo
+                );
+            }
+
+            FlxG.switchState(playState);
         }
 
         super.update(elapsed);

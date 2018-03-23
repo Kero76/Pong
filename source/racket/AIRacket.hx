@@ -55,7 +55,7 @@ class AIRacket extends AbstractRacket
      *  This function control the movement of the Racket.
      */
     override public function move(?point:FlxPoint)
-    {        
+    {
         var mA:Float = 0;
         var middleRacket:Float = AbstractRacket.HEIGHT / 2;
         var movedArea = (Main.WIDTH / 5) * 2.5;
@@ -90,7 +90,7 @@ class AIRacket extends AbstractRacket
             }
             velocity.set(AbstractRacket.MOVEMENT_SPEED, 0);
         }
-        
+
         velocity.rotate(FlxPoint.weak(0, 0), mA);
     }
 }
