@@ -23,12 +23,14 @@ package state;
 
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.system.FlxSound;
 
 import ball.Ball;
+import game.GameDirection;
 import racket.AbstractRacket;
 import racket.PlayerRacket;
 
@@ -138,12 +140,16 @@ class PlayState extends FlxState
         this.ball.screenCenter();
         add(this.ball);
 
+        var keys:Map<GameDirection, Array<FlxKey>> = [
+            GameDirection.UP => [Z, W],
+            GameDirection.DOWN => [S]
+        ];
         this.leftRacketPlayer = new PlayerRacket(
             0,
             FlxG.height / 2,
             FlxColor.BLUE,
             this.scorePlayerOne,
-            [Z, S]
+            keys
         );
         add(this.leftRacketPlayer);
     }

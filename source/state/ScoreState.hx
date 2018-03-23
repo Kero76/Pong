@@ -25,6 +25,7 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
 
+import game.GameDirection;
 import game.GameMode;
 
 class ScoreState extends FlxState

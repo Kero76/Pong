@@ -22,8 +22,10 @@
 package state;
 
 import flixel.FlxG;
+import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxColor;
 
+import game.GameDirection;
 import game.GameMode;
 import racket.AbstractRacket;
 import racket.PlayerRacket;
@@ -65,12 +67,16 @@ class MultiPlayersState extends PlayState
     override public function instanciateModels()
     {
         super.instanciateModels();
+        var keys:Map<GameDirection, Array<FlxKey>> = [
+            GameDirection.UP => [P],
+            GameDirection.DOWN => [M, SEMICOLON]
+        ];
         this.rightRacketPlayer = new PlayerRacket(
             FlxG.width - AbstractRacket.WIDTH,
             FlxG.height / 2,
             FlxColor.RED,
             this.scorePlayerTwo,
-            [P, M]
+            keys
         );
         add(this.rightRacketPlayer);
     }

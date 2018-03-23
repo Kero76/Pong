@@ -22,14 +22,16 @@
 package racket;
 
 import flixel.FlxG;
+import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
-import flixel.input.keyboard.FlxKey;
+
+import game.GameDirection;
 
 class PlayerRacket extends AbstractRacket
 {
     // Attributes
-    private var keys:Array<FlxKey>;
+    private var keys:Map<GameDirection, Array<FlxKey>>;
 
     /**
      *  Constructor for a Racket.
@@ -40,7 +42,7 @@ class PlayerRacket extends AbstractRacket
      *  @param score - Current score of the racket.
      *  @param keys - Control associate to move the racket. 
      */
-    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, ?score:Int, keys:Array<FlxKey>)
+    public function new(?X:Float = 0, ?Y:Float = 0, color:FlxColor, ?score:Int, keys:Map<GameDirection, Array<FlxKey>>)
     {
         super(X, Y, color, score);
         this.keys = keys;
@@ -63,8 +65,8 @@ class PlayerRacket extends AbstractRacket
     **/
     override public function move(?point:FlxPoint)
     {
-        var up:Bool = FlxG.keys.anyPressed([this.keys[0]]);
-        var down:Bool = FlxG.keys.anyPressed([this.keys[1]]);
+        var up:Bool = FlxG.keys.anyPressed(this.keys[UP]);
+        var down:Bool = FlxG.keys.anyPressed(this.keys[DOWN]);
         var mA:Float = 0;
 
         if (up && down)

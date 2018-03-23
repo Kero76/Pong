@@ -22,6 +22,7 @@
 package state;
 
 import flixel.FlxG;
+import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 
